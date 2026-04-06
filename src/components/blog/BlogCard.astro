@@ -1,0 +1,25 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { FrontmatterIntro } from "../../posts/frontmatter-post";
+import { formatIsoDate } from "../../utils/date-utils";
+interface Props {
+  intro: MarkdownInstance<FrontmatterIntro>;
+}
+const { intro } = Astro.props;
+const Content = intro.Content;
+---
+
+<article
+  class="bg-post-card prose max-w-none border border-border p-4 prose-custom dark:prose-invert prose-headings:text-card-foreground"
+>
+  <h1 class="mb-1">{intro.frontmatter.title}</h1>
+  <div class="text-sm text-muted-foreground has-[+_lite-youtube]:mb-8">
+    {formatIsoDate(intro.frontmatter.date)}
+  </div>
+  {(<Content />)}
+  <a
+    href={"/blog/" + intro.frontmatter.path}
+    class="not-prose text-sm tracking-widest text-card-foreground uppercase underline decoration-primary underline-offset-8"
+    >Read more</a
+  >
+</article>

@@ -1,0 +1,54 @@
+---
+import "../../styles/global.css";
+import type { MarkdownInstance } from "astro";
+import type {
+  FrontmatterIntro,
+  FrontmatterPost,
+} from "../../posts/frontmatter-post";
+import BlogPost from "../../components/blog/BlogPost.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+export async function getStaticPaths() {
+  const introFiles = Object.values(
+    import.meta.glob<MarkdownInstance<FrontmatterIntro>>(
+      "../../posts/*-intro*.{md,mdx}",
+      { eager: true },
+    ),
+  ) as MarkdownInstance<FrontmatterIntro>[];
+
+  const posts = Object.values(
+    import.meta.glob<MarkdownInstance<FrontmatterPost>>(
+      ["../../posts/*.{md,mdx}", "!../../posts/*-intro*.{md,mdx}"],
+      { eager: true },
+    ),
+  ) as MarkdownInstance<FrontmatterIntro>[];
+
+  const paths = [];
+
+  for (const intro of introFiles) {
+    paths.push({
+      params: {
+        blogPath: encodeURIComponent(intro.frontmatter.path),
+      },
+      props: {
+        intro,
+        post: posts.find((post) => post.file.includes(intro.frontmatter.post)),
+      },
+    });
+  }
+
+  return paths;
+}
+
+const { intro, post } = Astro.props;
+---
+
+<BaseLayout
+  metadata={{
+    title: `${intro.frontmatter.title} | Anna Shvets`,
+    description: intro.frontmatter.description,
+  }}
+>
+  <main class="prose max-w-none prose-custom dark:prose-invert">
+    <BlogPost post={post} intro={intro} />
+  </main>
+</BaseLayout>

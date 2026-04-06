@@ -1,0 +1,8 @@
+---
+interface Props {
+  classList?: string[];
+}
+const { classList } = Astro.props;
+---
+
+<div class:list={["hr shadow-hr", classList]}></div>

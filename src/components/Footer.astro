@@ -1,0 +1,24 @@
+---
+import YouTubeLink from "./links/YouTubeLink.astro";
+import LinkedinLink from "./links/LinkedinLink.astro";
+import MailLink from "./links/MailLink.astro";
+import SpotifyLink from "./links/SpotifyLink.astro";
+import AppleMusicLink from "./links/AppleMusicLink.astro";
+import DeezerLink from "./links/DeezerLink.astro";
+---
+
+<footer class="mt-12 mb-8 border-t border-primary/50">
+  <section class="flex flex-col items-center gap-5 pt-10">
+    <div class="flex flex-wrap items-center justify-center gap-5">
+      <SpotifyLink svgClass="h-16" />
+      <YouTubeLink svgClass="h-16" />
+      <AppleMusicLink svgClass="h-5" />
+      <DeezerLink svgClass="h-16" />
+    </div>
+
+    <div class="flex flex-wrap items-center justify-center gap-5">
+      <LinkedinLink svgClass="h-16" />
+      <MailLink svgClass="h-16" />
+    </div>
+  </section>
+</footer>

@@ -1,0 +1,57 @@
+---
+import "../../styles/global.css";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { MarkdownInstance } from "astro";
+import type {
+  FrontmatterIntro,
+  FrontmatterPost,
+} from "../../posts/frontmatter-post";
+import BlogPost from "../../components/blog/BlogPost.astro";
+import Separator from "../../components/Separator.astro";
+
+const introFiles = Object.values(
+  import.meta.glob<MarkdownInstance<FrontmatterIntro>>(
+    "../../posts/*-intro*.{md,mdx}",
+    { eager: true },
+  ),
+).reverse();
+
+const posts = Object.values(
+  import.meta.glob<MarkdownInstance<FrontmatterPost>>(
+    ["../../posts/*.{md,mdx}", "!../../posts/*-intro*.{md,mdx}"],
+    { eager: true },
+  ),
+);
+
+function getPostFromIntro(introFile: MarkdownInstance<FrontmatterIntro>) {
+  const { frontmatter } = introFile;
+
+  if (frontmatter.post) {
+    return posts.find((post) => post.file.includes(frontmatter.post));
+  }
+  return undefined;
+}
+
+const metadata = {
+  title: "Latest News from Anna Shvets – Classical Composer & Pianist",
+  description:
+    "Latest news from Anna Shvets, classical composer and pianist: new compositions, VR/music research and projects, concerts, recordings, announcements.",
+};
+---
+
+<BaseLayout metadata={metadata}>
+  <main class="prose max-w-none prose-custom dark:prose-invert">
+    {
+      introFiles.map((intro, index, array) => {
+        const isLast = index === array.length - 1;
+        const post = getPostFromIntro(intro);
+        return (
+          <>
+            <BlogPost post={post} intro={intro} />
+            {!isLast && <Separator classList={["my-10 mx-auto"]} />}
+          </>
+        );
+      })
+    }
+  </main>
+</BaseLayout>

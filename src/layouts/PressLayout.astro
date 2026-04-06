@@ -1,0 +1,16 @@
+---
+import "../styles/global.css";
+import BaseLayout from "./BaseLayout.astro";
+
+const metadata = {
+  title: "Anna Svhets in the Press | Reviews, Interviews & Media",
+  description:
+    "Press coverage of Anna Shvets and his works: reviews, interviews, articles.",
+};
+---
+
+<BaseLayout metadata={metadata}>
+  <div class="prose max-w-none p-4 prose-custom dark:prose-invert">
+    <slot />
+  </div>
+</BaseLayout>

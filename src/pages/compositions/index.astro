@@ -1,0 +1,61 @@
+---
+import "../../styles/global.css";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import { getCollection } from "astro:content";
+import Separator from "../../components/Separator.astro";
+const compositions = await getCollection("compositions");
+const metadata = {
+  title: "Anna Shvets Compositions | Classical Music Catalogue",
+  description:
+    "Explore Anna Shvets’s compositions: a full works list with instrumentation, duration, year, and notes. Classical music catalogue and updates.",
+};
+//TODO see if I can improve the margin in general. A little more space between the sections and maybe more above
+// the h2 in the subsections
+---
+
+<BaseLayout metadata={metadata}>
+  {
+    compositions.map((composition, index, array) => {
+      const isLast = index === array.length - 1;
+      return (
+        <>
+          <section class="px-4">
+            <h1 class="font-serif">{composition.data.principalTitle}</h1>
+            {composition.data.secondary.map((secondaryContent, index) => (
+              <>
+                {secondaryContent.secondaryTitle && (
+                  <h2 class={`${index === 0 ? "mt-2" : "mt-4"}`}>
+                    {secondaryContent.secondaryTitle}
+                  </h2>
+                )}
+                <ul>
+                  {secondaryContent.compositions.map((composition) => (
+                    <li class="flex items-center justify-between border-b border-primary/10 py-4 last:border-b-0 last:pb-0">
+                      <p>{composition.compositionTitle}</p>
+                      {composition.compositionDescription && (
+                        <a
+                          href={"/compositions/" + composition.path}
+                          class="not-prose text text-sm tracking-widest uppercase underline decoration-primary underline-offset-8"
+                        >
+                          Read more
+                        </a>
+                      )}
+                      {!composition.compositionDescription && (
+                        <span class="text-primary italic">
+                          {composition.duration}
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ))}
+          </section>
+
+          {!isLast && <Separator classList={["w-1/2 my-10 mx-auto"]} />}
+        </>
+      );
+    })
+  }
+</BaseLayout>

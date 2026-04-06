@@ -1,0 +1,85 @@
+---
+// TODO See how font weight works. How many different weight I need to import
+import "@fontsource/poppins";
+import "@fontsource-variable/libre-baskerville";
+import "@fontsource/ibm-plex-mono";
+import Header from "../components/Header.astro";
+import ApplyColorMode from "../components/ApplyColorMode.astro";
+import Footer from "../components/Footer.astro";
+import { SEO } from "astro-seo";
+import type { Metadata } from "../types/metadata";
+
+interface Props {
+  metadata: Metadata;
+}
+
+const { metadata } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <ApplyColorMode />
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <SEO title={metadata?.title} description={metadata?.description} />
+  </head>
+  <body class="m-auto max-w-2xl">
+    <Header />
+    <div id="header-sentinel" class="h-5"></div>
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      const header = document.getElementsByTagName("header")[0];
+      const sentinel = document.getElementById("header-sentinel");
+
+      if (header && sentinel) {
+        const headerHeight = header.offsetHeight;
+
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            // When content intersects with the header area, add shadow
+            if (entry.isIntersecting) {
+              header.classList.remove("shadow-b");
+            } else {
+              header.classList.add("shadow-b");
+            }
+          },
+          {
+            // Observe at the header position from the top
+            rootMargin: `-${headerHeight}px 0px 0px 0px`,
+            threshold: 0,
+          },
+        );
+
+        observer.observe(sentinel);
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  body {
+    background:
+      linear-gradient(to right, transparent, var(--background), transparent),
+      var(--bg-noise) repeat,
+      var(--background);
+    background-attachment: fixed;
+  }
+
+  @media (min-width: 1200px) {
+    body {
+      background:
+        radial-gradient(circle, var(--background) 50%, transparent),
+        var(--bg-noise) repeat,
+        var(--background);
+      background-attachment: fixed;
+    }
+  }
+</style>

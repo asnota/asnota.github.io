@@ -1,0 +1,4 @@
+{
+  "*.{ts,js,html,astro}": ["eslint", "prettier --write"],
+  "!(*.ts|*.js|*.html)": ["prettier --write --ignore-unknown"]
+}

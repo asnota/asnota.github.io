@@ -1,0 +1,85 @@
+---
+import "../styles/global.css";
+import Separator from "../components/Separator.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import type { MarkdownInstance } from "astro";
+import type { FrontmatterIntro } from "../posts/frontmatter-post";
+import BlogCard from "../components/blog/BlogCard.astro";
+import SpotifyLink from "../components/links/SpotifyLink.astro";
+import AppleMusicLink from "../components/links/AppleMusicLink.astro";
+import DeezerLink from "../components/links/DeezerLink.astro";
+import YouTubeLink from "../components/links/YouTubeLink.astro";
+import { getCollection } from "astro:content";
+import CompositionCard from "../components/CompositionCard.astro";
+
+const introFiles = Object.values(
+  import.meta.glob<MarkdownInstance<FrontmatterIntro>>(
+    "../posts/*-intro*.{md,mdx}",
+    { eager: true },
+  ),
+)
+  .slice(-3)
+  .reverse();
+
+const compositions = await getCollection("compositions");
+
+const metadata = {
+  title: "Anna Shvets – Classical Composer & Pianist | Official Website",
+  description:
+    "Official website of Anna Shvets, classical composer and pianist. Discover compositions, recordings, VR/music research and projects, latest news, performances.",
+};
+---
+
+<BaseLayout metadata={metadata}>
+  <main>
+    <h2 class="mx-auto w-fit uppercase">Composer & Pianist</h2>
+    <section class="flex items-center justify-center gap-5 pt-10">
+      <SpotifyLink />
+      <YouTubeLink />
+      <AppleMusicLink />
+      <DeezerLink />
+    </section>
+
+    <Separator classList={["w-1/2 my-10 mx-auto"]} />
+
+    <section>
+      <h2 class="mx-auto mb-10 w-fit">Latest news</h2>
+      {
+        introFiles.map((intro, index, array) => {
+          const isLast = index === array.length - 1;
+          return (
+            // jsx fragment is needed because of a bug inside prettier-asto : https://github.com/withastro/prettier-plugin-astro/issues/429
+
+            <>
+              <BlogCard intro={intro} />
+              {!isLast && <Separator classList={["my-10 mx-auto"]} />}
+            </>
+          );
+        })
+      }
+      <a
+        href="/blog"
+        class="mx-auto mt-10 block w-fit text-sm tracking-widest uppercase underline decoration-primary underline-offset-8"
+      >
+        See all news
+      </a>
+    </section>
+
+    <Separator classList={["my-10 mx-auto"]} />
+
+    <section>
+      <h2 class="mx-auto mb-6 w-fit">Compositions</h2>
+      <ul>
+        {
+          compositions.map((composition) => {
+            return (
+              <li class="flex items-center justify-between border-b border-primary/10 py-4 last:border-b-0 last:pb-0">
+                <CompositionCard composition={composition} />
+              </li>
+            );
+          })
+        }
+      </ul>
+    </section>
+  </main>
+</BaseLayout>

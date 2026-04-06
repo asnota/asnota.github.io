@@ -1,0 +1,43 @@
+---
+import "../styles/global.css";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import Separator from "../components/Separator.astro";
+const achievements = await getCollection("achievements");
+const metadata = {
+  title:
+    "Anna Shvets Achievements | Awards, Performances, Festivals, Scientifics Publications",
+  description:
+    "Discover the achievements of Anna Shvets : competition prizes, performances in major concert halls, festival participation, scientific publications and scholarships.",
+};
+---
+
+<BaseLayout metadata={metadata}>
+  {
+    achievements.map((achievement, index, array) => {
+      const isLast = index === array.length - 1;
+      return (
+        <>
+          <section class="px-4">
+            <h1 class="font-serif">{achievement.data.category}</h1>
+            <ul>
+              {achievement.data.details.map((detail) => (
+                <li class="border-b border-primary/10 py-4 last:border-b-0 last:pb-0">
+                  <p>{detail.description}</p>
+                  {detail.imgPath && (
+                    <img
+                      class="pt-4"
+                      src={detail.imgPath}
+                      alt={detail.description}
+                    />
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+          {!isLast && <Separator classList={["w-1/2 my-10 mx-auto"]} />}
+        </>
+      );
+    })
+  }
+</BaseLayout>

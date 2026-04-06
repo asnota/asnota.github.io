@@ -1,0 +1,10 @@
+---
+const { composition } = Astro.props;
+---
+
+<a
+  href="/compositions"
+  class="bg-gradient-composition-card flex h-24 w-full items-center justify-center border border-border"
+>
+  <h3 class="mx-auto w-fit">{composition.data.principalTitle}</h3>
+</a>

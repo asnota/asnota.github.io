@@ -1,0 +1,20 @@
+<script is:inline>
+  // Initialize theme on page load
+  function initTheme() {
+    const documentElement = document.documentElement;
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "dark") {
+      documentElement.classList.add("dark");
+    } else if (savedTheme === "light") {
+      documentElement.classList.remove("dark");
+    } else {
+      // Use system preference if no saved preference
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        documentElement.classList.add("dark");
+      }
+    }
+  }
+
+  initTheme();
+</script>

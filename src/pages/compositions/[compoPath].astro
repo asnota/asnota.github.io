@@ -1,0 +1,63 @@
+---
+import "../../styles/global.css";
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const compositionsCollection = await getCollection("compositions");
+  const paths = [];
+
+  for (const entry of compositionsCollection) {
+    const data = entry.data;
+
+    for (const secondary of data.secondary) {
+      for (const composition of secondary.compositions) {
+        if (composition.compositionDescription && composition.path) {
+          paths.push({
+            params: {
+              compoPath: encodeURIComponent(composition.path),
+            },
+            props: {
+              composition,
+              secondaryTitle: secondary.secondaryTitle,
+            },
+          });
+        }
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { composition, secondaryTitle } = Astro.props;
+const metadata = {
+  title: `${composition.compositionTitle} | Anna Shvets`,
+  description: composition.seoDescription,
+};
+---
+
+<BaseLayout metadata={metadata}>
+  <article class="px-4">
+    <h1>{composition.compositionTitle}</h1>
+    <p class="meta">
+      <span>{composition.compositionSubTitle}</span>
+      {secondaryTitle && <span> - {secondaryTitle}</span>}
+      {composition.duration && <span> | {composition.duration}</span>}
+    </p>
+
+    {
+      composition.compositionDescription &&
+        composition.compositionDescription.map((description) => (
+          <p>{description}</p>
+        ))
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  .meta {
+    font-style: italic;
+    margin-bottom: 2rem;
+  }
+</style>

@@ -1,0 +1,192 @@
+[
+  {
+    "id": "01",
+    "category": "Education",
+    "details": [
+      {
+        "description": "PhD in computational musicology received at the Maria Curie-Sklodowska University in Lublin (Poland)",
+        "imgPath": ""
+      },
+      {
+        "description": "Master in composition received at the National Academy of Music n. Piotr Tchaikovsky in Kyiv (Ukraine)",
+        "imgPath": ""
+      },
+      {
+        "description": "Licentiate in composition received at the National Academy of Music n. Piotr Tchaikovsky in Kyiv (Ukraine)",
+        "imgPath": ""
+      },
+      {
+        "description": "Organist diploma of Sacral Music Institute in Przemyśl (Poland)",
+        "imgPath": ""
+      }
+    ]
+  },
+  {
+    "id": "02",
+    "category": "Concert halls",
+    "details": [
+      {
+        "description": "Pierre Lamy concert hall in Annecy (France)",
+        "imgPath": ""
+      },
+      {
+        "description": "Concert hall of the Associazione Europea di Musica e Comunicazione (Montecassiano, Italy)",
+        "imgPath": ""
+      },
+      {
+        "description": "Large and Small concert halls of the National Academy of Music n. P. Tchaikovsky in Kyiv (Ukraine)",
+        "imgPath": ""
+      },
+      {
+        "description": "Concert hall of the Lithuanian Union of Composers (Vilnius, Lithuania)",
+        "imgPath": ""
+      },
+      {
+        "description": "Concert hall of the Academic Center of Culture of Maria Curie-Skłodowska University (Lublin, Poland)",
+        "imgPath": ""
+      },
+      {
+        "description": "St. Alexander Cathedral in Kyiv",
+        "imgPath": ""
+      },
+      {
+        "description": "Neue Apostolische Kirche in Kyiv",
+        "imgPath": ""
+      },
+      {
+        "description": "Small concert hall of the High Institut of Music n. R. Glier in Kyiv",
+        "imgPath": ""
+      },
+      {
+        "description": "Concert hall of Lesia Ukrainka Museum in Kyiv",
+        "imgPath": ""
+      },
+      {
+        "description": "Concert hall of the Centrum of Culture in Nova Kachovka (Ukraine)",
+        "imgPath": ""
+      },
+      {
+        "description": "Concert hall of Music College in Kryvyi Rih (Ukraine)",
+        "imgPath": ""
+      },
+      {
+        "description": "Concert hall of the Children's Academy of Arts in Kyiv",
+        "imgPath": ""
+      }
+    ]
+  },
+  {
+    "id": "03",
+    "category": "Competitions",
+    "details": [
+      {
+        "description": "Prize in category Culture et Arts Numériques by VRJAM 2023 for the \"Volumetric music composition in the VR\" project (Toulouse, France)",
+        "imgPath": ""
+      },
+      {
+        "description": "Winner of the International composition competition \"Vivat musica!\" (Nova Kachovka, Ukraine)",
+        "imgPath": ""
+      },
+      {
+        "description": "Laureate of the Ukrainian composition competition n. Karabitz (Kyiv, Ukraine)",
+        "imgPath": ""
+      },
+      {
+        "description": "Finalist of the International composition competition \"CIMFA\" (Annecy, France)",
+        "imgPath": ""
+      },
+      {
+        "description": "Prize for the best instrumental work received at the regional composition competition (Kryvyi Rih, Ukraine)",
+        "imgPath": ""
+      }
+    ]
+  },
+  {
+    "id": "04",
+    "category": "Festivals",
+    "details": [
+      {
+        "description": "\"Soeurs Jumelles\" music festival (2024, Rochefort, France)",
+        "imgPath": ""
+      },
+      {
+        "description": "\"Soeurs Jumelles\" music festival (2023, Rochefort, France)",
+        "imgPath": ""
+      },
+      {
+        "description": "\"Music, Communication and Performance\" conference-festival (2018, Montecassiano, Italy)",
+        "imgPath": ""
+      },
+      {
+        "description": "\"KULturalia\" art festival (2015, Lublin, Poland)",
+        "imgPath": ""
+      },
+      {
+        "description": "\"XVII Lubelskie Forum Sztuki Współczesnej im. Witolta Lutosławskiego\" music festival (2013, Lublin, Poland)",
+        "imgPath": "https://annashvetscomposer.wordpress.com/wp-content/uploads/2018/04/12-lutoslawski-festival-lux-aeterna-1.jpg"
+      },
+      {
+        "description": "\"The night of culture\" art festival (2013, Lublin, Poland)",
+        "imgPath": ""
+      },
+      {
+        "description": "\"Kyiv's premiers of the season\" music festival (2004, Kyiv, Ukraine)",
+        "imgPath": ""
+      }
+    ]
+  },
+  {
+    "id": "05",
+    "category": "Music publications",
+    "details": [
+      {
+        "description": "Shvets, A. At the Stream. In Polyphony of Living; Field Studies Council (UK): London, 2001; pp 90-91",
+        "imgPath": ""
+      },
+      {
+        "description": "Shvets, A. Piece for Flute and Piano. In Works of Young Composers – Winners of the III International Competition \"Vivat, Musica!\"; Energomasz: Nova Kachovka, 2004, pp 28-30",
+        "imgPath": ""
+      }
+    ]
+  },
+  {
+    "id": "06",
+    "category": "Scientific publications and conferences",
+    "details": [
+      {
+        "description": "31 scientific publication in scientific peer-reviewed journals and books, which are included to the Web of Science, Scopus, Google Scholar and other systems of indexing.",
+        "imgPath": ""
+      },
+      {
+        "description": "Active participation in 30 international conferences and scientific workshops in Washington, Boston, London, Paris, Copenhagen, Bordeaux, Sophia Antipolis, Salzburg, Florence, Vilnius, Kraków and other European cities.",
+        "imgPath": ""
+      },
+      {
+        "description": "Selection committee member at international conferences and Open Access journals in France and UK. More detailed information about research activity can be found at shvetscomposer.wordpress.com",
+        "imgPath": ""
+      }
+    ]
+  },
+  {
+    "id": "07",
+    "category": "Masterclasses",
+    "details": [
+      {
+        "description": "Masterclass on baroque and romantic organ music performance given by the rector of Hochschule für Katholische Kirchenmusik und Musikpädagogik Regensburg Stefan Baier (Lublin 2013, active participation).",
+        "imgPath": "https://annashvetscomposer.wordpress.com/wp-content/uploads/2018/04/organ-masterclass-1.jpg"
+      },
+      {
+        "description": "Masterclass on baroque and romantic organ music performance given by the professor of Karol Szymanowski Academy of Music in Katowice Marek Toporowski (Katowice 2008, active participation).",
+        "imgPath": ""
+      },
+      {
+        "description": "Masterclass on renaissance organ music performance given by the professor of Scuola di Musica Santa Cecilia Christopher Stembridge (Kiev 2008, passive participation).",
+        "imgPath": ""
+      },
+      {
+        "description": "Masterclass on renaissance choir music performance given by professors of Schola Cantorum Basiliensis (Kiev 2007, active participation).",
+        "imgPath": ""
+      }
+    ]
+  }
+]
