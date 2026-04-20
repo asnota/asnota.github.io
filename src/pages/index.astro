@@ -32,7 +32,7 @@ const metadata = {
 
 <BaseLayout metadata={metadata}>
   <main>
-    <p class="mx-auto w-fit text-3xl font-bold uppercase">Composer & Pianist</p>
+    <p class="mx-auto w-fit text-[2em] font-bold">Composer & Pianist</p>
     <section class="flex items-center justify-center gap-5 pt-10">
       <SpotifyLink />
       <YouTubeLink />
@@ -43,7 +43,7 @@ const metadata = {
     <Separator classList={["w-1/2 my-10 mx-auto"]} />
 
     <section>
-      <h1 class="mx-auto mb-10 w-fit">Latest news</h1>
+      <h2 class="mx-auto mb-10 w-fit">Latest news</h2>
       {
         introFiles.map((intro, index, array) => {
           const isLast = index === array.length - 1;
