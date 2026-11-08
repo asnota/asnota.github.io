@@ -13,21 +13,9 @@ const year = new Date().getFullYear();
         </h2>
         <a
           href={`mailto:${EMAIL}`}
-          class="mt-8 hidden text-xl text-night-link underline decoration-1 underline-offset-[0.3em] hover:decoration-2 md:inline-block md:text-2xl"
-          >{EMAIL}</a
+          class="mt-8 block rounded-full bg-night-link px-5 py-3 text-center font-medium text-night md:inline-block md:px-8"
+          >Email Anna</a
         >
-        <div class="mt-8 md:hidden">
-          <a
-            href={`mailto:${EMAIL}`}
-            class="block rounded-full bg-night-link px-5 py-3 text-center font-medium text-night"
-            >Email Anna</a
-          >
-          <a
-            href={`mailto:${EMAIL}`}
-            class="mt-4 block text-center text-sm text-night-link underline underline-offset-4"
-            >{EMAIL}</a
-          >
-        </div>
       </div>
       <ul class="grid grid-cols-2 gap-x-8 gap-y-4 md:grid-cols-3">
         {

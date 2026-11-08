@@ -138,7 +138,7 @@ A warm-neutral paper palette with violet-tinted darks and a single saturated vio
 
 ### Secondary
 - **Night** (night): the full-bleed band behind the featured release and the contact footer, and the letterbox behind the hero video. Paper text sits on it.
-- **Night Lilac Link** (night-link): the link, focus and button colour on night. Used for the footer email link, the mobile "Email Anna" pill and the focus outline inside night bands.
+- **Night Lilac Link** (night-link): the link, focus and button colour on night. Used for the footer "Email Anna" pill (full width on mobile) and the focus outline inside night bands.
 
 ### Tertiary
 - **Programme Lavender** (lavender): the full-bleed credentials band, the text-selection highlight, and the hover fill of the paper pill on night.
