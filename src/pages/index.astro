@@ -7,6 +7,7 @@ import { Image, getImage } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import { YouTube } from "astro-embed";
 import BlogCard from "../components/blog/BlogCard.astro";
+import { getCollection } from "astro:content";
 import omegaCover from "../images/omega_cover.jpg";
 import redemptionCover from "../images/redemption_cover.jpg";
 
@@ -23,15 +24,13 @@ const latestNews = Object.values(introModules)
   )
   .slice(0, 3);
 
-const compositions = [
-  { title: "Orchestra", highlights: ["Saga Wiśniowiecka", "Last day", "Rose and Fog"] },
-  { title: "Choral a cappella", highlights: ["Lux aeterna", "Swan Nebula", "Psalmus 66"] },
-  { title: "Chamber instrumental", highlights: ["Sonata for violin and piano", "Diptych for string quartet", "Spoletto Arte"] },
-  { title: "Chamber vocal", highlights: ["Voix dans l’univers", "In memoriam", "song cycles on Ukrainian and Polish poetry"] },
-  { title: "Organ", highlights: ["Fantasia, prelude and fugue", "Leta for organ and clarinet"] },
-  { title: "Film, VR & ambient", highlights: ["Overrun", "Le jour où… la nuit", "Omega", "Atmos"] },
-  { title: "Arrangements", highlights: ["Spring tale", "Hymn miłości", "Shadows of the Rain"] },
-];
+const compositions = (await getCollection("compositions")).map(({ data }) => ({
+  title: data.shortTitle ?? data.principalTitle,
+  highlights: data.secondary
+    .flatMap((group) => group.compositions)
+    .filter((composition) => composition.highlight)
+    .map((composition) => composition.shortTitle ?? composition.compositionTitle),
+}));
 
 const streaming = {
   spotify: "https://open.spotify.com/artist/0lLh4PC7BzD3jSjnI5sxSG",

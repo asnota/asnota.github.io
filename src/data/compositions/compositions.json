@@ -2,6 +2,7 @@
   {
     "id": "01",
     "principalTitle": "Music for orchestra",
+    "shortTitle": "Orchestra",
     "secondary": [
       {
         "secondaryTitle": "",
@@ -9,6 +10,7 @@
           {
             "path": "saga-wisniowiecka",
             "compositionTitle": "Saga Wiśniowiecka",
+            "highlight": true,
             "compositionSubTitle": "Symphony for big symphonic orchestra, choir, soprano, harpsichord and mandolin",
             "duration": "",
             "compositionDescription": [
@@ -19,6 +21,7 @@
           {
             "path": "last-day",
             "compositionTitle": "Last day",
+            "highlight": true,
             "compositionSubTitle": "Sinfonietta for big symphonic orchestra and choir",
             "duration": "",
             "compositionDescription": [
@@ -29,6 +32,7 @@
           {
             "path": "rose-and-fog",
             "compositionTitle": "Rose and Fog",
+            "highlight": true,
             "compositionSubTitle": "For big symphonic orchestra",
             "duration": "",
             "compositionDescription": [
@@ -77,6 +81,7 @@
   {
     "id": "02",
     "principalTitle": "Choral music a capella",
+    "shortTitle": "Choral a cappella",
     "secondary": [
       {
         "secondaryTitle": "Catholic mass",
@@ -99,7 +104,11 @@
           { "compositionTitle": "Absolve, Domine", "duration": "3’" },
           { "compositionTitle": "Confutatis", "duration": "2’" },
           { "compositionTitle": "Lacrimosa", "duration": "2’" },
-          { "compositionTitle": "Lux aeterna", "duration": "3’" }
+          {
+            "compositionTitle": "Lux aeterna",
+            "highlight": true,
+            "duration": "3’"
+          }
         ]
       },
       {
@@ -107,6 +116,8 @@
         "compositions": [
           {
             "compositionTitle": "Swan Nebula for mixed choir",
+            "shortTitle": "Swan Nebula",
+            "highlight": true,
             "duration": "3’"
           },
           {
@@ -115,6 +126,8 @@
           },
           {
             "compositionTitle": "Psalmus 66 for mixed choir",
+            "shortTitle": "Psalmus 66",
+            "highlight": true,
             "duration": "8’"
           },
           { "compositionTitle": "Ave Maria for mixed choir", "duration": "3’" },
@@ -145,16 +158,19 @@
   {
     "id": "03",
     "principalTitle": "Chamber instrumental music",
+    "shortTitle": "Chamber instrumental",
     "secondary": [
       {
         "secondaryTitle": "Ensembles",
         "compositions": [
           {
             "compositionTitle": "Sonata for violin and piano",
+            "highlight": true,
             "duration": "15’"
           },
           {
             "compositionTitle": "Diptych for string quartet",
+            "highlight": true,
             "duration": "10’"
           },
           { "compositionTitle": "Duo for piano and flute", "duration": "7’" },
@@ -175,6 +191,8 @@
           { "compositionTitle": "Ballade for piano", "duration": "4’" },
           {
             "compositionTitle": "Spoletto Arte cycle of 10 piano pieces inspired by pictures of contemporary Italian painters",
+            "shortTitle": "Spoletto Arte",
+            "highlight": true,
             "duration": "15’"
           },
           { "compositionTitle": "Cycle of piano preludes", "duration": "10’" },
@@ -197,16 +215,21 @@
   {
     "id": "04",
     "principalTitle": "Chamber vocal music",
+    "shortTitle": "Chamber vocal",
     "secondary": [
       {
         "secondaryTitle": "",
         "compositions": [
           {
             "compositionTitle": "Voix dans l’univers cycle of 4 vocalises for soprano and piano",
+            "shortTitle": "Voix dans l’univers",
+            "highlight": true,
             "duration": "12’"
           },
           {
             "compositionTitle": "Cycle for soprano and piano on the Ukrainian poetry",
+            "shortTitle": "song cycles on Ukrainian and Polish poetry",
+            "highlight": true,
             "duration": "10’"
           },
           {
@@ -215,6 +238,8 @@
           },
           {
             "compositionTitle": "In memoriam vocalise for soprano and piano",
+            "shortTitle": "In memoriam",
+            "highlight": true,
             "duration": "3’"
           }
         ]
@@ -224,6 +249,7 @@
   {
     "id": "05",
     "principalTitle": "Music for organ",
+    "shortTitle": "Organ",
     "secondary": [
       {
         "secondaryTitle": "Organ solo",
@@ -232,6 +258,8 @@
           { "compositionTitle": "Lied piece for organ", "duration": "2’" },
           {
             "compositionTitle": "Fantasia prelude and fugue for organ",
+            "shortTitle": "Fantasia, prelude and fugue",
+            "highlight": true,
             "duration": "7’"
           },
           { "compositionTitle": "Prelude for organ", "duration": "3’" }
@@ -242,6 +270,8 @@
         "compositions": [
           {
             "compositionTitle": "Leta piece for organ and clarinet",
+            "shortTitle": "Leta for organ and clarinet",
+            "highlight": true,
             "duration": "5’"
           },
           {
@@ -255,16 +285,21 @@
   {
     "id": "06",
     "principalTitle": "Music for films, VR and ambient music",
+    "shortTitle": "Film, VR & ambient",
     "secondary": [
       {
         "secondaryTitle": "",
         "compositions": [
           {
             "compositionTitle": "Music to the animation film Overrun",
+            "shortTitle": "Overrun",
+            "highlight": true,
             "duration": "8’"
           },
           {
             "compositionTitle": "Music to the animation film Le jour où… la nuit",
+            "shortTitle": "Le jour où… la nuit",
+            "highlight": true,
             "duration": "4’"
           },
           {
@@ -273,10 +308,14 @@
           },
           {
             "compositionTitle": "Music to the VR artistic project Omega",
+            "shortTitle": "Omega",
+            "highlight": true,
             "duration": "6’"
           },
           {
             "compositionTitle": "Music to the VR artistic project Atmos",
+            "shortTitle": "Atmos",
+            "highlight": true,
             "duration": "3’"
           },
           {
@@ -290,6 +329,7 @@
   {
     "id": "07",
     "principalTitle": "Music and arrangements",
+    "shortTitle": "Arrangements",
     "secondary": [
       {
         "secondaryTitle": "",
@@ -300,6 +340,8 @@
           },
           {
             "compositionTitle": "Piano cycle for children Spring tale",
+            "shortTitle": "Spring tale",
+            "highlight": true,
             "duration": "10’"
           },
           {
@@ -308,10 +350,14 @@
           },
           {
             "compositionTitle": "Harmonization and arrangement of the song Hymn milości",
+            "shortTitle": "Hymn miłości",
+            "highlight": true,
             "duration": "3’"
           },
           {
             "compositionTitle": "Harmonization and arrangement of the song Shadows of the rain",
+            "shortTitle": "Shadows of the Rain",
+            "highlight": true,
             "duration": "3’"
           }
         ]
