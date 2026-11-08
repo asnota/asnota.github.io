@@ -65,7 +65,7 @@ const metadata = {
     <div
       class="mx-auto grid max-w-[1240px] gap-12 px-6 pt-12 pb-20 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-16 md:px-12 md:pt-20 md:pb-28"
     >
-      <div class="hero-copy">
+      <div>
         <h1 class="font-display text-[clamp(3.25rem,7.5vw,6rem)] leading-[0.95] font-normal tracking-[-0.02em]">
           Anna <em class="italic">Shvets</em>
         </h1>
@@ -101,7 +101,7 @@ const metadata = {
         </p>
       </div>
 
-      <figure class="hero-media">
+      <figure>
         <div class="hero-video ml-auto max-w-[520px] overflow-hidden rounded-[3px] bg-night shadow-[0_24px_48px_-24px_rgb(23_20_31/0.45)]">
           <YouTube
             id="MNY_ukRzFsg"
@@ -252,17 +252,6 @@ const metadata = {
 </HomeLayout>
 
 <style>
-  @media (prefers-reduced-motion: no-preference) {
-    .hero-copy > *,
-    .hero-media {
-      animation: rise 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-    .hero-copy > :nth-child(2) { animation-delay: 60ms; }
-    .hero-copy > :nth-child(3) { animation-delay: 120ms; }
-    .hero-copy > :nth-child(4) { animation-delay: 180ms; }
-    .hero-copy > :nth-child(5) { animation-delay: 240ms; }
-    .hero-media { animation-delay: 180ms; }
-  }
   .hero-video :global(lite-youtube)::before {
     display: none;
   }
@@ -271,10 +260,5 @@ const metadata = {
   }
   .hero-video :global(lite-youtube) {
     background-size: cover;
-  }
-  @keyframes rise {
-    from {
-      transform: translateY(12px);
-    }
   }
 </style>

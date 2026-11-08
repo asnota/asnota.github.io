@@ -114,7 +114,7 @@ components:
 
 The front page reads like a well-set printed programme on warm paper: a large serif name, a quiet grotesk for everything that informs, thin rules that divide content the way a programme separates movements, and one violet ink for anything you can act on. It is calm and open. Sections breathe at 112px on desktop, and content sits in a 1240px container with two-column splits rather than the old narrow single column.
 
-Depth comes from full-bleed colour bands, not from cards or surfaces. The page alternates paper, a night-navy band for the featured release and the contact close, and a pale lavender band for credentials. Imagery is square, almost unrounded (3px), and treated as an object on the page. Motion is a single short rise on the first viewport and nothing else.
+Depth comes from full-bleed colour bands, not from cards or surfaces. The page alternates paper, a night-navy band for the featured release and the contact close, and a pale lavender band for credentials. Imagery is square, almost unrounded (3px), and treated as an object on the page. The page has no motion.
 
 This world ships in full on the front page (`../src/pages/index.astro`, `HomeLayout`). `HomeHeader` and `HomeFooter` are shared by every page: the other pages (`BaseLayout`) wrap their legacy content in this header and footer until they are redesigned. The front page has no dark mode.
 
@@ -239,9 +239,9 @@ Quiet, rounded and confident; every action is a pill.
 - **Do** separate content with 1px rules (rule colour, or ink above a column) and 80px / 112px section padding.
 - **Do** use full-bleed night bands for emphasis and lavender bands for proof, switching text to paper / night-soft / night-link on night.
 - **Do** underline text links at 1px with a 0.3em offset, thickening to 2px on hover.
-- **Do** keep motion to the 700ms rise (`cubic-bezier(0.16, 1, 0.3, 1)`, 12px) on first-viewport content, staggered by 60ms and disabled under reduced motion.
 
 ### Don't:
+- **Don't** add entrance or scroll animations; the page is static.
 - **Don't** introduce a second accent colour; violet and violet-ink are the only chromatic tokens on paper.
 - **Don't** wrap content in filled or shadowed cards; the only shadow is Media Rest under featured media.
 - **Don't** bold Playfair or use it for body copy.
