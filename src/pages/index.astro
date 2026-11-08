@@ -8,6 +8,7 @@ import { Icon } from "astro-icon/components";
 import { YouTube } from "astro-embed";
 import BlogCard from "../components/blog/BlogCard.astro";
 import { getCollection } from "astro:content";
+import { STREAM_PROFILES } from "../consts";
 import omegaCover from "../images/omega_cover.jpg";
 import redemptionCover from "../images/redemption_cover.jpg";
 
@@ -31,13 +32,6 @@ const compositions = (await getCollection("compositions")).map(({ data }) => ({
     .filter((composition) => composition.highlight)
     .map((composition) => composition.shortTitle ?? composition.compositionTitle),
 }));
-
-const streaming = {
-  spotify: "https://open.spotify.com/artist/0lLh4PC7BzD3jSjnI5sxSG",
-  appleMusic: "https://music.apple.com/artist/anna-shvets/1400689648",
-  youtube: "https://www.youtube.com/@ashvets7981",
-  deezer: "https://www.deezer.com/artist/15087911",
-};
 
 const omegaLinks = [
   { name: "Spotify", href: "https://open.spotify.com/album/1RM61l076QVC3fAA8Dxms7" },
@@ -90,7 +84,7 @@ const metadata = {
         </p>
         <div class="mt-9 flex flex-col gap-3 sm:flex-row">
           <a
-            href={streaming.spotify}
+            href={STREAM_PROFILES.spotify.href}
             target="_blank"
             rel="noopener"
             class="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 font-medium text-paper transition-colors hover:bg-violet-ink"
@@ -107,9 +101,9 @@ const metadata = {
         </div>
         <p class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-ink-soft">
           <span>Also on</span>
-          <a href={streaming.appleMusic} target="_blank" rel="noopener" class="text-link text-ink">Apple Music</a>
-          <a href={streaming.youtube} target="_blank" rel="noopener" class="text-link text-ink">YouTube</a>
-          <a href={streaming.deezer} target="_blank" rel="noopener" class="text-link text-ink">Deezer</a>
+          <a href={STREAM_PROFILES.appleMusic.href} target="_blank" rel="noopener" class="text-link text-ink">{STREAM_PROFILES.appleMusic.name}</a>
+          <a href={STREAM_PROFILES.youtube.href} target="_blank" rel="noopener" class="text-link text-ink">{STREAM_PROFILES.youtube.name}</a>
+          <a href={STREAM_PROFILES.deezer.href} target="_blank" rel="noopener" class="text-link text-ink">{STREAM_PROFILES.deezer.name}</a>
         </p>
       </div>
 

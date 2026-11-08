@@ -1,12 +1,6 @@
 ---
-const links = [
-  { name: "Spotify", href: "https://open.spotify.com/artist/0lLh4PC7BzD3jSjnI5sxSG" },
-  { name: "Apple Music", href: "https://music.apple.com/artist/anna-shvets/1400689648" },
-  { name: "YouTube", href: "https://www.youtube.com/@ashvets7981" },
-  { name: "Deezer", href: "https://www.deezer.com/artist/15087911" },
-  { name: "LinkedIn", href: "https://www.linkedin.com/in/anna-shvets-10451b61/" },
-];
-const email = "contact@annashvetscomposer.com";
+import { EMAIL, STREAM_PROFILES } from "../../consts";
+
 const year = new Date().getFullYear();
 ---
 
@@ -18,26 +12,26 @@ const year = new Date().getFullYear();
           Commissions, performances &amp; collaborations
         </h2>
         <a
-          href={`mailto:${email}`}
+          href={`mailto:${EMAIL}`}
           class="mt-8 hidden text-xl text-night-link underline decoration-1 underline-offset-[0.3em] hover:decoration-2 md:inline-block md:text-2xl"
-          >{email}</a
+          >{EMAIL}</a
         >
         <div class="mt-8 md:hidden">
           <a
-            href={`mailto:${email}`}
+            href={`mailto:${EMAIL}`}
             class="block rounded-full bg-night-link px-5 py-3 text-center font-medium text-night"
             >Email Anna</a
           >
           <a
-            href={`mailto:${email}`}
+            href={`mailto:${EMAIL}`}
             class="mt-4 block text-center text-sm text-night-link underline underline-offset-4"
-            >{email}</a
+            >{EMAIL}</a
           >
         </div>
       </div>
       <ul class="grid grid-cols-2 gap-x-8 gap-y-4 md:grid-cols-3">
         {
-          links.map((link) => (
+          Object.values(STREAM_PROFILES).map((link) => (
             <li>
               <a
                 href={link.href}
