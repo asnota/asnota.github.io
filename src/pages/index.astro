@@ -8,7 +8,7 @@ import { Icon } from "astro-icon/components";
 import { YouTube } from "astro-embed";
 import BlogCard from "../components/blog/BlogCard.astro";
 import { getCollection } from "astro:content";
-import { STREAM_PROFILES } from "../consts";
+import { OMEGA_ALBUM, STREAM_PROFILES } from "../consts";
 import omegaCover from "../images/omega_cover.jpg";
 import redemptionCover from "../images/redemption_cover.jpg";
 
@@ -32,12 +32,6 @@ const compositions = (await getCollection("compositions")).map(({ data }) => ({
     .filter((composition) => composition.highlight)
     .map((composition) => composition.shortTitle ?? composition.compositionTitle),
 }));
-
-const omegaLinks = [
-  { name: "Spotify", href: "https://open.spotify.com/album/1RM61l076QVC3fAA8Dxms7" },
-  { name: "Apple Music", href: "https://music.apple.com/us/album/omega-single/1763403410" },
-  { name: "Deezer", href: "https://www.deezer.com/en/album/630839941" },
-];
 
 const credentials = [
   {
@@ -172,7 +166,7 @@ const metadata = {
         </p>
         <div class="mt-9 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
           {
-            omegaLinks.map((link, index) => (
+            Object.values(OMEGA_ALBUM).map((link, index) => (
               <a
                 href={link.href}
                 target="_blank"
