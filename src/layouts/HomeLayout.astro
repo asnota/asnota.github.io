@@ -1,0 +1,62 @@
+---
+import "@fontsource-variable/playfair-display";
+import "@fontsource-variable/playfair-display/wght-italic.css";
+import "@fontsource-variable/hanken-grotesk";
+import HomeHeader from "../components/home/HomeHeader.astro";
+import HomeFooter from "../components/home/HomeFooter.astro";
+import { SEO } from "astro-seo";
+import type { Metadata } from "../types/metadata";
+
+interface Props {
+  metadata: Metadata;
+}
+
+const { metadata } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <SEO title={metadata?.title} description={metadata?.description} />
+  </head>
+  <body class="home bg-paper font-text text-ink antialiased">
+    <a
+      href="#main-content"
+      class="sr-only rounded-full bg-ink px-4 py-2 text-paper focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60]"
+      >Skip to content</a
+    >
+    <HomeHeader />
+    <main id="main-content">
+      <slot />
+    </main>
+    <HomeFooter />
+  </body>
+</html>
+
+<style is:global>
+  .home ::selection {
+    background: var(--color-lavender);
+    color: var(--color-ink);
+  }
+  .home :focus-visible {
+    outline: 2px solid var(--color-violet);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .home .bg-night :focus-visible {
+    outline-color: var(--color-night-link);
+  }
+  .home a.text-link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+  }
+  .home a.text-link:hover {
+    text-decoration-thickness: 2px;
+  }
+</style>

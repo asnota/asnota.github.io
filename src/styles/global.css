@@ -184,6 +184,20 @@
 
   --shadow-b: var(--shadow-b);
   --shadow-hr: var(--shadow-hr);
+
+  /* Front page world */
+  --color-paper: #f5f4ef;
+  --color-ink: #1b1a24;
+  --color-ink-soft: #55525f;
+  --color-rule: #dcd9d0;
+  --color-violet: #5a3fd1;
+  --color-violet-ink: #4a2fc0;
+  --color-night: #17141f;
+  --color-night-soft: #b9b4c9;
+  --color-night-link: #cfc6ff;
+  --color-lavender: #ece8f6;
+  --font-display: "Playfair Display Variable", "Playfair Display", Georgia, serif;
+  --font-text: "Hanken Grotesk Variable", "Hanken Grotesk", system-ui, sans-serif;
 }
 
 @layer base {

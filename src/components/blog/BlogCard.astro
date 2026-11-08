@@ -2,24 +2,59 @@
 import type { MarkdownInstance } from "astro";
 import type { FrontmatterIntro } from "../../posts/frontmatter-post";
 import { formatIsoDate } from "../../utils/date-utils";
+
 interface Props {
   intro: MarkdownInstance<FrontmatterIntro>;
 }
+
 const { intro } = Astro.props;
-const Content = intro.Content;
+const { title, date, path, description } = intro.frontmatter;
+// The intro content is passed as the default slot and rendered to HTML here.
+const html = await Astro.slots.render("default");
+
+const youtubeId = html.match(/<lite-youtube videoid="([\w-]+)"/)?.[1];
+const youtube = youtubeId && `https://youtu.be/${youtubeId}`;
+const spotify = html.match(/https:\/\/open\.spotify\.com\/(?:album|track)\/\w+/)?.[0];
+
+// First sentence of the intro paragraphs, capped at 220 characters.
+function summarize(html: string) {
+  const text = [...html.matchAll(/<p>([\s\S]*?)<\/p>/g)]
+    .map(([, p]) => p.replace(/<[^>]+>/g, ""))
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const sentence = text.match(/^.+?[.!?](?=\s|$)/)?.[0] ?? text;
+  if (sentence.length <= 220) return sentence;
+  const cut = sentence.lastIndexOf(", ", 220);
+  return cut > 80 ? `${sentence.slice(0, cut)}.` : sentence;
+}
+
+const summary = summarize(html) || description;
 ---
 
-<article
-  class="bg-post-card prose max-w-none border border-border p-4 prose-custom dark:prose-invert prose-headings:text-card-foreground"
->
-  <h2 class="mb-1">{intro.frontmatter.title}</h2>
-  <div class="text-sm text-muted-foreground has-[+_lite-youtube]:mb-8">
-    {formatIsoDate(intro.frontmatter.date)}
-  </div>
-  {(<Content />)}
-  <a
-    href={"/blog/" + intro.frontmatter.path}
-    class="not-prose text-sm tracking-widest text-card-foreground uppercase underline decoration-primary underline-offset-8"
-    >Read more</a
-  >
+<article class="flex flex-col border-t border-ink pt-5">
+  <h3 class="font-display font-normal text-2xl leading-snug">
+    <a href={`/blog/${path}`} class="hover:text-violet-ink">{title}</a>
+  </h3>
+  <p class="mt-2 text-sm text-ink-soft">
+    <time datetime={date}>{formatIsoDate(date)}</time>
+  </p>
+  <p class="mt-3 leading-relaxed text-ink-soft" set:html={summary} />
+  <p class="mt-auto flex gap-5 pt-5 text-sm">
+    {
+      !youtube && spotify && (
+        <a href={spotify} target="_blank" rel="noopener" class="text-link text-violet-ink">
+          Listen on Spotify
+        </a>
+      )
+    }
+    {
+      youtube && (
+        <a href={youtube} target="_blank" rel="noopener" class="text-link text-violet-ink">
+          Watch on YouTube
+        </a>
+      )
+    }
+    <a href={`/blog/${path}`} class="text-link text-ink">Read more</a>
+  </p>
 </article>

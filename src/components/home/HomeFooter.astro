@@ -1,0 +1,60 @@
+---
+const links = [
+  { name: "Spotify", href: "https://open.spotify.com/artist/0lLh4PC7BzD3jSjnI5sxSG" },
+  { name: "Apple Music", href: "https://music.apple.com/artist/anna-shvets/1400689648" },
+  { name: "YouTube", href: "https://www.youtube.com/@ashvets7981" },
+  { name: "Deezer", href: "https://www.deezer.com/artist/15087911" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/anna-shvets-10451b61/" },
+];
+const email = "contact@annashvetscomposer.com";
+const year = new Date().getFullYear();
+---
+
+<footer id="contact" class="scroll-mt-20 bg-night font-text text-paper">
+  <div class="mx-auto max-w-[1240px] px-6 pt-20 pb-10 md:px-12 md:pt-28">
+    <div class="grid gap-12 md:grid-cols-2 md:items-end">
+      <div>
+        <h2 class="font-display text-4xl font-normal leading-[1.1] md:text-[3.25rem]">
+          Commissions, performances &amp; collaborations
+        </h2>
+        <a
+          href={`mailto:${email}`}
+          class="mt-8 hidden text-xl text-night-link underline decoration-1 underline-offset-[0.3em] hover:decoration-2 md:inline-block md:text-2xl"
+          >{email}</a
+        >
+        <div class="mt-8 md:hidden">
+          <a
+            href={`mailto:${email}`}
+            class="block rounded-full bg-night-link px-5 py-3 text-center font-medium text-night"
+            >Email Anna</a
+          >
+          <a
+            href={`mailto:${email}`}
+            class="mt-4 block text-center text-sm text-night-link underline underline-offset-4"
+            >{email}</a
+          >
+        </div>
+      </div>
+      <ul class="grid grid-cols-2 gap-x-8 gap-y-4 md:grid-cols-3">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener"
+                class="text-paper underline decoration-1 underline-offset-[0.3em] hover:decoration-2"
+              >
+                {link.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="mt-20 flex justify-between border-t border-white/15 pt-6 text-sm text-night-soft">
+      <span>© {year} Anna Shvets</span>
+      <span>Composer &amp; Pianist</span>
+    </div>
+  </div>
+</footer>
