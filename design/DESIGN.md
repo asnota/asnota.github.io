@@ -148,7 +148,7 @@ A warm-neutral paper palette with violet-tinted darks and a single saturated vio
 - **Ink** (ink): headings, body text on lavender, the primary pill fill, and the 1px rule above each news column.
 - **Soft Ink** (ink-soft): secondary copy on paper: lead paragraphs, summaries, dates, captions, catalogue highlights.
 - **Paper Rule** (rule): hairline dividers: under the header, under the hero, and between catalogue rows.
-- **Night Soft** (night-soft): secondary copy on night (Omega description, footer meta line).
+- **Night Soft** (night-soft): secondary copy on night (Omega description).
 
 ### Named Rules
 **The One Ink Rule.** Violet is the only chromatic accent, and it means "you can act on this" or "this is the name of her role". Never add a second accent hue.
@@ -200,7 +200,7 @@ Flat by default. Depth comes from tonal full-bleed bands (paper, night, lavender
 
 ## Shapes
 
-Two shapes only: fully round pills for every button and the skip link, and nearly square media (3px radius) for video and cover art. Dividers are 1px lines: rule colour between rows and under bands, full ink above each news column, white at 15% on night.
+Two shapes only: fully round pills for every button and the skip link, and nearly square media (3px radius) for video and cover art. Dividers are 1px lines: rule colour between rows and under bands, and full ink above each news column.
 
 ## Components
 
