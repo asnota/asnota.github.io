@@ -1,6 +1,16 @@
 ---
 import "../styles/global.css";
-import BaseLayout from "./BaseLayout.astro";
+import type { MarkdownHeading } from "astro";
+import HomeLayout from "./HomeLayout.astro";
+
+interface Props {
+  headings?: MarkdownHeading[];
+}
+
+// Each "##" in press.mdx is one source.
+const sources = (Astro.props.headings ?? []).filter(
+  (heading) => heading.depth === 2,
+);
 
 const metadata = {
   title: "Anna Svhets in the Press | Reviews, Interviews & Media",
@@ -9,8 +19,33 @@ const metadata = {
 };
 ---
 
-<BaseLayout metadata={metadata}>
-  <div class="prose max-w-none p-4 prose-custom dark:prose-invert">
-    <slot />
+<HomeLayout metadata={metadata}>
+  <div
+    class="mx-auto grid max-w-[1240px] gap-10 px-6 pt-12 pb-20 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-16 md:px-12 md:pt-20 md:pb-28"
+  >
+    {
+      sources.length > 0 && (
+        <nav
+          aria-label="Sources"
+          class="hidden md:sticky md:top-28 md:block md:self-start"
+        >
+          <ul class="border-t border-ink">
+            {sources.map((source) => (
+              <li class="border-b border-rule">
+                <a
+                  href={`#${source.slug}`}
+                  class="block py-3 text-sm leading-snug text-ink transition-colors hover:text-violet-ink"
+                >
+                  {source.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+    <div class="prose-custom prose prose-lg min-w-0 md:col-start-2">
+      <slot />
+    </div>
   </div>
-</BaseLayout>
+</HomeLayout>
