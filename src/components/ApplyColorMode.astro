@@ -17,4 +17,15 @@
   }
 
   initTheme();
+
+  // Mobile browser chrome follows the page ground. Read once the stylesheet has loaded.
+  function syncThemeColor() {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    const paper = getComputedStyle(document.documentElement)
+      .getPropertyValue("--paper")
+      .trim();
+    if (meta && paper) meta.setAttribute("content", paper);
+  }
+  window.syncThemeColor = syncThemeColor;
+  document.addEventListener("DOMContentLoaded", syncThemeColor);
 </script>

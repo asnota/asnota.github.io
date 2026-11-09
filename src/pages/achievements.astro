@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import HomeLayout from "../layouts/HomeLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
 // "Name (2024, Rochefort, France)" -> year in its own column, place kept in the text.
@@ -32,9 +32,9 @@ const metadata = {
 };
 ---
 
-<HomeLayout metadata={metadata}>
+<BaseLayout metadata={metadata}>
   <!-- Page head -->
-  <section class="bg-lavender">
+  <section class="border-b border-rule">
     <div class="mx-auto max-w-[1240px] px-6 pt-12 pb-16 md:px-12 md:pt-20 md:pb-20">
       <h1 class="font-display text-[clamp(3rem,6vw,4.5rem)] leading-none font-normal tracking-[-0.02em]">
         Achievements
@@ -101,7 +101,7 @@ const metadata = {
                         height="900"
                         loading="lazy"
                         decoding="async"
-                        class="aspect-[2/3] w-full rounded-[3px] border border-rule object-cover object-top transition-colors group-hover:border-ink"
+                        class="aspect-[2/3] w-full [filter:var(--scan-filter)] rounded-[3px] border border-rule object-cover object-top transition-colors group-hover:border-ink"
                       />
                       <span class="mt-2 block text-sm text-violet-ink underline decoration-1 underline-offset-[0.3em] group-hover:decoration-2">
                         View scan<span class="sr-only"> (opens in a new tab)</span>
@@ -120,4 +120,4 @@ const metadata = {
       ))
     }
   </div>
-</HomeLayout>
+</BaseLayout>

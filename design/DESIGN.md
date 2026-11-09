@@ -116,9 +116,9 @@ The front page reads like a well-set printed programme on warm paper: a large se
 
 Depth comes from full-bleed colour bands, not from cards or surfaces. The page alternates paper, a night-navy band for the featured release and the contact close, and a pale lavender band for credentials. Imagery is square, almost unrounded (3px), and treated as an object on the page. The page has no motion.
 
-This world ships in full on the front page (`../src/pages/index.astro`, `HomeLayout`). `HomeHeader` and `HomeFooter` are shared by every page: the other pages (`BaseLayout`) wrap their legacy content in this header and footer until they are redesigned. The front page has no dark mode.
+This world ships on every page through `BaseLayout` (`../src/layouts/BaseLayout.astro`), which wraps each page in the shared `HomeHeader` and `HomeFooter`.
 
-**Temporary dark header.** On pages using `BaseLayout`, `HomeHeader` shows a dark mode toggle, and its dark state uses the legacy tokens (`--background`, `--foreground`, `--border`, `--primary`). This is a stopgap until this world gets its own dark palette. It is the only allowed exception to the legacy-token rule below and never applies on the front page.
+**Dark mode.** Every page ships light and dark. The world tokens are CSS variables in `../src/styles/global.css` (`:root` for light, `.dark` for dark), so components use the same utilities in both modes. Dark keeps the band structure: paper becomes a violet-tinted charcoal (`#1a1821`), ink a warm off-white (`#ece9e1`), night bands sink deeper than the page (`#0d0c12`), lavender becomes a lifted violet surface (`#26213a`), and violet-ink lightens to `#b8abff` for text. Text on night uses `night-ink`, never `paper`, so it stays light in both modes. The Contact pill hovers to `violet-press`. Three tokens exist for dark: `focus` (the focus ring, light violet in dark because the violet fill is 2.6:1 on the dark ground), `selection` (a mid violet, since lavender is invisible on the dark ground), and `scan-filter` (dims white press scans and certificates to 86% brightness). The mobile browser chrome (`theme-color`) follows the paper colour. The mode follows the system setting until the visitor uses the sun/moon toggle in the header, which is saved in `localStorage`.
 
 **Key Characteristics:**
 - Warm paper ground, near-black violet-tinted ink, one violet accent.

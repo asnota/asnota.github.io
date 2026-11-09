@@ -6,7 +6,7 @@ import type {
   FrontmatterPost,
 } from "../../posts/frontmatter-post";
 import BlogPost from "../../components/blog/BlogPost.astro";
-import HomeLayout from "../../layouts/HomeLayout.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 export async function getStaticPaths() {
   const introFiles = Object.values(
     import.meta.glob<MarkdownInstance<FrontmatterIntro>>(
@@ -48,11 +48,11 @@ export async function getStaticPaths() {
 const { intro, post, older, newer } = Astro.props;
 ---
 
-<HomeLayout
+<BaseLayout
   metadata={{
     title: `${intro.frontmatter.title} | Anna Shvets`,
     description: intro.frontmatter.description,
   }}
 >
   <BlogPost post={post} intro={intro} older={older} newer={newer} />
-</HomeLayout>
+</BaseLayout>

@@ -1,6 +1,6 @@
 ---
 import "../../styles/global.css";
-import HomeLayout from "../../layouts/HomeLayout.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import type { MarkdownInstance } from "astro";
 import type {
   FrontmatterIntro,
@@ -43,7 +43,7 @@ const metadata = {
 };
 ---
 
-<HomeLayout metadata={metadata}>
+<BaseLayout metadata={metadata}>
   <header class="border-b border-rule">
     <div
       class="mx-auto max-w-[1240px] px-6 pt-12 pb-16 md:px-12 md:pt-20 md:pb-20"
@@ -116,4 +116,4 @@ const metadata = {
       })
     }
   </div>
-</HomeLayout>
+</BaseLayout>

@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import HomeLayout from "../layouts/HomeLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 import type { MarkdownInstance } from "astro";
 import type { FrontmatterIntro } from "../posts/frontmatter-post";
 import { Image, getImage } from "astro:assets";
@@ -59,7 +59,7 @@ const metadata = {
 };
 ---
 
-<HomeLayout metadata={metadata}>
+<BaseLayout metadata={metadata}>
   <!-- Hero -->
   <section class="border-b border-rule">
     <div
@@ -141,7 +141,7 @@ const metadata = {
   </section>
 
   <!-- Featured: Omega -->
-  <section class="bg-night text-paper" aria-labelledby="omega-heading">
+  <section class="bg-night text-night-ink" aria-labelledby="omega-heading">
     <div
       class="mx-auto grid max-w-[1240px] gap-y-8 px-6 py-20 md:grid-cols-2 md:gap-x-16 md:gap-y-6 md:px-12 md:py-28"
     >
@@ -174,8 +174,8 @@ const metadata = {
                 class:list={[
                   "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-medium whitespace-nowrap transition-colors",
                   index === 0
-                    ? "col-span-2 bg-paper text-night hover:bg-lavender"
-                    : "border border-white/35 text-paper hover:border-white",
+                    ? "col-span-2 bg-night-ink text-night hover:bg-lavender dark:hover:bg-night-link"
+                    : "border border-white/35 text-night-ink hover:border-white",
                 ]}
               >
                 {index === 0 && (
@@ -249,7 +249,7 @@ const metadata = {
       </dl>
     </div>
   </section>
-</HomeLayout>
+</BaseLayout>
 
 <style>
   .hero-video :global(lite-youtube)::before {

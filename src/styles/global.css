@@ -130,6 +130,50 @@
   --shadow-hr: 0 2px 4px rgba(0, 0, 0, 0.075);
 }
 
+/* World palette. Light is the approved paper world. Dark keeps its structure:
+   the page ground turns to a violet-tinted charcoal, night bands sink deeper than it,
+   the lavender band becomes a lifted violet surface, and violet text lightens to stay legible. */
+:root {
+  color-scheme: light;
+  --paper: #f5f4ef;
+  --ink: #1b1a24;
+  --ink-soft: #55525f;
+  --rule: #dcd9d0;
+  --violet: #5a3fd1;
+  --violet-ink: #4a2fc0;
+  --violet-press: #4a2fc0;
+  --night: #17141f;
+  --night-ink: #f5f4ef;
+  --night-soft: #b9b4c9;
+  --night-link: #cfc6ff;
+  --lavender: #ece8f6;
+  --focus: #5a3fd1;
+  --selection: #ece8f6;
+  --scan-filter: none;
+}
+
+.dark {
+  color-scheme: dark;
+  --paper: #1a1821;
+  --ink: #ece9e1;
+  --ink-soft: #a9a4b5;
+  --rule: #34303f;
+  --violet: #5a3fd1;
+  --violet-ink: #b8abff;
+  --violet-press: #4a2fc0;
+  --night: #0d0c12;
+  --night-ink: #ece9e1;
+  --night-soft: #aaa5ba;
+  --night-link: #cfc6ff;
+  --lavender: #26213a;
+  /* Violet focus fill measures 2.6:1 on the dark ground, so the ring uses the light violet. */
+  --focus: #b8abff;
+  /* Lavender is too close to the dark ground to show a selection. */
+  --selection: #4a3a94;
+  /* Paper scans and certificates are white sheets; dim them so they do not glare. */
+  --scan-filter: brightness(0.86);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -185,17 +229,21 @@
   --shadow-b: var(--shadow-b);
   --shadow-hr: var(--shadow-hr);
 
-  /* Front page world */
-  --color-paper: #f5f4ef;
-  --color-ink: #1b1a24;
-  --color-ink-soft: #55525f;
-  --color-rule: #dcd9d0;
-  --color-violet: #5a3fd1;
-  --color-violet-ink: #4a2fc0;
-  --color-night: #17141f;
-  --color-night-soft: #b9b4c9;
-  --color-night-link: #cfc6ff;
-  --color-lavender: #ece8f6;
+  /* Front page world. Values switch with .dark, see the world palette above @theme. */
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-rule: var(--rule);
+  --color-violet: var(--violet);
+  --color-violet-ink: var(--violet-ink);
+  --color-violet-press: var(--violet-press);
+  --color-night: var(--night);
+  --color-night-ink: var(--night-ink);
+  --color-night-soft: var(--night-soft);
+  --color-night-link: var(--night-link);
+  --color-lavender: var(--lavender);
+  --color-focus: var(--focus);
+  --color-selection: var(--selection);
   --font-display: "Playfair Display Variable", "Playfair Display", Georgia, serif;
   --font-text: "Hanken Grotesk Variable", "Hanken Grotesk", system-ui, sans-serif;
 }
@@ -275,7 +323,7 @@
   --tw-prose-quote-borders: var(--color-rule);
   --tw-prose-captions: var(--color-ink-soft);
   --tw-prose-code: var(--color-ink);
-  --tw-prose-pre-code: var(--color-paper);
+  --tw-prose-pre-code: var(--color-night-ink);
   --tw-prose-pre-bg: var(--color-night);
   --tw-prose-th-borders: var(--color-ink);
   --tw-prose-td-borders: var(--color-rule);
@@ -346,6 +394,7 @@
   }
   img {
     border: 1px solid var(--color-rule);
+    filter: var(--scan-filter);
   }
   lite-youtube {
     max-width: none;
