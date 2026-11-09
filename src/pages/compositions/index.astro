@@ -1,61 +1,116 @@
 ---
 import "../../styles/global.css";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-
+import HomeLayout from "../../layouts/HomeLayout.astro";
+import WorkLink from "../../components/compositions/WorkLink.astro";
 import { getCollection } from "astro:content";
-import Separator from "../../components/Separator.astro";
-const compositions = await getCollection("compositions");
+
+const toId = (text: string) =>
+  text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+const genres = (await getCollection("compositions")).map(({ data }) => ({
+  id: toId(data.shortTitle ?? data.principalTitle),
+  title: data.principalTitle,
+  shortTitle: data.shortTitle ?? data.principalTitle,
+  groups: data.secondary,
+}));
+
 const metadata = {
   title: "Anna Shvets Compositions | Classical Music Catalogue",
   description:
     "Explore Anna Shvets’s compositions: a full works list with instrumentation, duration, year, and notes. Classical music catalogue and updates.",
 };
-//TODO see if I can improve the margin in general. A little more space between the sections and maybe more above
-// the h2 in the subsections
 ---
 
-<BaseLayout metadata={metadata}>
-  {
-    compositions.map((composition, index, array) => {
-      const isLast = index === array.length - 1;
-      return (
-        <>
-          <section class="px-4">
-            <h1 class="font-serif">{composition.data.principalTitle}</h1>
-            {composition.data.secondary.map((secondaryContent, index) => (
-              <>
-                {secondaryContent.secondaryTitle && (
-                  <h2 class={`${index === 0 ? "mt-2" : "mt-4"}`}>
-                    {secondaryContent.secondaryTitle}
-                  </h2>
-                )}
-                <ul>
-                  {secondaryContent.compositions.map((composition) => (
-                    <li class="flex items-center justify-between border-b border-primary/10 py-4 last:border-b-0 last:pb-0">
-                      <p>{composition.compositionTitle}</p>
-                      {composition.compositionDescription && (
-                        <a
-                          href={"/compositions/" + composition.path}
-                          class="not-prose text text-sm tracking-widest uppercase underline decoration-primary underline-offset-8"
-                        >
-                          Read more
-                        </a>
-                      )}
-                      {!composition.compositionDescription && (
-                        <span class="text-primary italic">
-                          {composition.duration}
-                        </span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </>
-            ))}
-          </section>
+<HomeLayout metadata={metadata}>
+  <!-- Page head -->
+  <section class="border-b border-rule">
+    <div class="mx-auto max-w-[1240px] px-6 pt-12 pb-16 md:px-12 md:pt-20 md:pb-20">
+      <h1 class="font-display text-[clamp(3rem,6vw,4.5rem)] leading-none font-normal tracking-[-0.02em]">
+        Compositions
+      </h1>
+      <p class="mt-6 max-w-[52ch] text-lg leading-relaxed text-ink-soft">
+        The complete catalogue: symphonic works, sacred choral music, chamber
+        and organ pieces, and scores for film and VR.
+      </p>
+      <nav aria-label="Genres" class="mt-10">
+        <ul class="flex flex-wrap gap-2">
+          {
+            genres.map((genre) => (
+              <li>
+                <a
+                  href={`#${genre.id}`}
+                  class="inline-flex rounded-full border border-ink/30 px-4 py-2 text-sm whitespace-nowrap text-ink transition-colors hover:border-ink"
+                >
+                  {genre.shortTitle}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </section>
 
-          {!isLast && <Separator classList={["w-1/2 my-10 mx-auto"]} />}
-        </>
-      );
-    })
-  }
-</BaseLayout>
+  <!-- Catalogue -->
+  <div class="mx-auto max-w-[1240px] px-6 pb-20 md:px-12 md:pb-28">
+    {
+      genres.map((genre, genreIndex) => (
+        <section
+          id={genre.id}
+          aria-labelledby={`${genre.id}-heading`}
+          class:list={[
+            "scroll-mt-16 grid gap-8 pt-16 md:scroll-mt-20 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-16 md:pt-24",
+            genreIndex > 0 && "mt-16 border-t border-rule md:mt-24",
+          ]}
+        >
+          <h2
+            id={`${genre.id}-heading`}
+            class="font-display text-4xl leading-[1.1] font-normal text-balance md:sticky md:top-28 md:self-start lg:text-5xl"
+          >
+            {genre.title}
+          </h2>
+
+          <div class="flex flex-col gap-12 md:gap-14">
+            {genre.groups.map((group) => (
+              <div>
+                {group.secondaryTitle && (
+                  <h3 class="mb-4 font-display text-2xl font-normal text-ink-soft">
+                    {group.secondaryTitle}
+                  </h3>
+                )}
+                <ul class="border-t border-ink">
+                  {group.compositions.map((work) =>
+                    work.compositionDescription && work.path ? (
+                      <WorkLink
+                        path={work.path}
+                        title={work.compositionTitle}
+                        subtitle={work.compositionSubTitle}
+                        label="About the work"
+                      />
+                    ) : (
+                      <li class="flex items-baseline justify-between gap-6 border-b border-rule py-4">
+                        <span class="text-lg leading-snug">{work.compositionTitle}</span>
+                        {work.duration && (
+                          <span class="shrink-0 text-sm text-ink-soft tabular-nums">
+                            <span class="sr-only">Duration: </span>
+                            {work.duration}
+                          </span>
+                        )}
+                      </li>
+                    ),
+                  )}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</HomeLayout>
+
