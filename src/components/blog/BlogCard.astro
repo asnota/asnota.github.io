@@ -33,8 +33,8 @@ const summary = summarize(html) || description;
 ---
 
 <article class="flex flex-col border-t border-ink pt-5">
-  <h3 class="font-display font-normal text-2xl leading-snug">
-    <a href={`/blog/${path}`} class="hover:text-violet-ink">{title}</a>
+  <h3 class="font-display font-normal text-2xl leading-snug text-balance">
+    <a href={`/blog/${path}`} class="transition-colors hover:text-violet-ink">{title}</a>
   </h3>
   <p class="mt-2 text-sm text-ink-soft">
     <time datetime={date}>{formatIsoDate(date)}</time>
