@@ -37,6 +37,7 @@ const achievements = defineCollection({
       z.object({
         description: z.string(),
         imgPath: z.string(),
+        imgAlt: z.string().optional(),
       }),
     ),
   }),

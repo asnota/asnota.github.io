@@ -1,9 +1,29 @@
 ---
 import "../styles/global.css";
-import BaseLayout from "../layouts/BaseLayout.astro";
+import HomeLayout from "../layouts/HomeLayout.astro";
 import { getCollection } from "astro:content";
-import Separator from "../components/Separator.astro";
-const achievements = await getCollection("achievements");
+
+// "Name (2024, Rochefort, France)" -> year in its own column, place kept in the text.
+const YEAR_PLACE = /\s*\((\d{4}),\s*([^)]+)\)$/;
+
+// Typographic quotes for the straight quotes in the data.
+const curlyQuotes = (text: string) => text.replace(/"([^"]*)"/g, "\u201C$1\u201D");
+
+const categories = (await getCollection("achievements")).map(({ data }, index) => ({
+  id: `${data.category.split(" ")[0].toLowerCase()}-${index}`,
+  title: data.category,
+  items: data.details.map((detail) => {
+    const match = detail.description.match(YEAR_PLACE);
+    const text = curlyQuotes(match ? detail.description.replace(YEAR_PLACE, "") : detail.description);
+    return {
+      year: match?.[1],
+      place: match?.[2],
+      text,
+      img: detail.imgPath ? { src: detail.imgPath, alt: detail.imgAlt ?? "" } : undefined,
+    };
+  }),
+}));
+
 const metadata = {
   title:
     "Anna Shvets Achievements | Awards, Performances, Festivals, Scientifics Publications",
@@ -12,32 +32,92 @@ const metadata = {
 };
 ---
 
-<BaseLayout metadata={metadata}>
-  {
-    achievements.map((achievement, index, array) => {
-      const isLast = index === array.length - 1;
-      return (
-        <>
-          <section class="px-4">
-            <h1 class="font-serif">{achievement.data.category}</h1>
-            <ul>
-              {achievement.data.details.map((detail) => (
-                <li class="border-b border-primary/10 py-4 last:border-b-0 last:pb-0">
-                  <p>{detail.description}</p>
-                  {detail.imgPath && (
-                    <img
-                      class="pt-4"
-                      src={detail.imgPath}
-                      alt={detail.description}
-                    />
+<HomeLayout metadata={metadata}>
+  <!-- Page head -->
+  <section class="bg-lavender">
+    <div class="mx-auto max-w-[1240px] px-6 pt-12 pb-16 md:px-12 md:pt-20 md:pb-20">
+      <h1 class="font-display text-[clamp(3rem,6vw,4.5rem)] leading-none font-normal tracking-[-0.02em]">
+        Achievements
+      </h1>
+      <p class="mt-6 max-w-[52ch] text-lg leading-relaxed">
+        Degrees, concert halls, competition prizes, festivals, publications and
+        masterclasses in Ukraine, Poland, France, Italy and Lithuania.
+      </p>
+      <nav aria-label="Categories" class="mt-10">
+        <ul class="flex flex-wrap gap-2">
+          {
+            categories.map((category) => (
+              <li>
+                <a
+                  href={`#${category.id}`}
+                  class="inline-flex rounded-full border border-ink/30 px-4 py-2 text-sm whitespace-nowrap text-ink transition-colors hover:border-ink"
+                >
+                  {category.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Record -->
+  <div class="mx-auto max-w-[1240px] px-6 pb-20 md:px-12 md:pb-28">
+    {
+      categories.map((category, categoryIndex) => (
+        <section
+          id={category.id}
+          aria-labelledby={`${category.id}-heading`}
+          class:list={[
+            "scroll-mt-16 grid gap-8 pt-16 md:scroll-mt-20 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-16 md:pt-24",
+            categoryIndex > 0 && "mt-16 border-t border-rule md:mt-24",
+          ]}
+        >
+          <h2
+            id={`${category.id}-heading`}
+            class="font-display text-4xl leading-[1.1] font-normal text-balance md:sticky md:top-28 md:self-start lg:text-5xl"
+          >
+            {category.title}
+          </h2>
+
+          <ul class="border-t border-ink">
+            {category.items.map((item) => (
+              <li class="flex items-start justify-between gap-6 border-b border-rule py-5 sm:gap-8">
+                <div class="max-w-[62ch]">
+                  <p class="text-lg leading-relaxed">{item.text}</p>
+                  {item.place && <p class="mt-1 text-sm text-ink-soft">{item.place}</p>}
+                  {item.img && (
+                    <a
+                      href={item.img.src}
+                      target="_blank"
+                      rel="noopener"
+                      class="group mt-4 block w-28"
+                    >
+                      <img
+                        src={item.img.src}
+                        alt={item.img.alt}
+                        width="600"
+                        height="900"
+                        loading="lazy"
+                        decoding="async"
+                        class="aspect-[2/3] w-full rounded-[3px] border border-rule object-cover object-top transition-colors group-hover:border-ink"
+                      />
+                      <span class="mt-2 block text-sm text-violet-ink underline decoration-1 underline-offset-[0.3em] group-hover:decoration-2">
+                        View scan<span class="sr-only"> (opens in a new tab)</span>
+                      </span>
+                    </a>
                   )}
-                </li>
-              ))}
-            </ul>
-          </section>
-          {!isLast && <Separator classList={["w-1/2 my-10 mx-auto"]} />}
-        </>
-      );
-    })
-  }
-</BaseLayout>
+                </div>
+
+                {item.year && (
+                  <span class="shrink-0 pt-1 text-sm text-ink-soft tabular-nums">{item.year}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</HomeLayout>
