@@ -1,22 +1,107 @@
 ---
 import type { MarkdownInstance } from "astro";
+import { Icon } from "astro-icon/components";
 import type {
   FrontmatterIntro,
   FrontmatterPost,
 } from "../../posts/frontmatter-post";
 import { formatIsoDate } from "../../utils/date-utils";
+import { curlyQuotes } from "../../utils/text-utils";
+
+type PostLink = { title: string; path: string };
 interface Props {
   post?: MarkdownInstance<FrontmatterPost>;
   intro: MarkdownInstance<FrontmatterIntro>;
+  older?: PostLink;
+  newer?: PostLink;
 }
-const { post, intro } = Astro.props;
+const { post, intro, older, newer } = Astro.props;
+const neighbours = [
+  newer && { label: "Newer", ...newer },
+  older && { label: "Older", ...older },
+].filter(Boolean) as (PostLink & { label: string })[];
+const { title, date } = intro.frontmatter;
 ---
 
-<article class="prose max-w-none p-4 prose-custom dark:prose-invert">
-  <h1 class="mb-1">{intro.frontmatter.title}</h1>
-  <div class="text-sm text-muted-foreground has-[+_lite-youtube]:mb-8">
-    {formatIsoDate(intro.frontmatter.date)}
+<article>
+  <header class="border-b border-rule">
+    <div
+      class="mx-auto max-w-[1240px] px-6 pt-10 pb-16 md:px-12 md:pt-14 md:pb-20"
+    >
+      <a
+        href="/blog"
+        class="text-link inline-flex items-center gap-1.5 text-sm text-violet-ink"
+      >
+        <Icon name="tabler:arrow-left" class="h-4 w-4" aria-hidden="true" />
+        All news
+      </a>
+      <h1
+        class="mt-10 max-w-[20ch] font-display text-[clamp(2.75rem,6vw,4.5rem)] leading-none font-normal tracking-[-0.02em] text-balance md:mt-14"
+      >
+        {curlyQuotes(title)}
+      </h1>
+    </div>
+  </header>
+
+  <div
+    class="mx-auto grid max-w-[1240px] gap-6 px-6 py-12 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-16 md:px-12 md:py-24"
+  >
+    <dl class="md:sticky md:top-28 md:self-start">
+      <dt
+        class="text-xs font-semibold tracking-[0.14em] text-violet-ink uppercase"
+      >
+        Published
+      </dt>
+      <dd class="mt-2 leading-relaxed">
+        <time datetime={date}>{formatIsoDate(date)}</time>
+      </dd>
+    </dl>
+    <div class="prose-custom prose prose-lg min-w-0">
+      <intro.Content />
+      {post && <post.Content />}
+    </div>
   </div>
-  {(<intro.Content />)}
-  {post && <post.Content />}
+
+  {
+    neighbours.length > 0 && (
+      <nav aria-label="More news" class="border-t border-rule">
+        <ul class="mx-auto grid max-w-[1240px] gap-10 px-6 py-12 sm:grid-cols-2 md:gap-16 md:px-12 md:py-16">
+          {neighbours.map((item) => {
+            const older = item.label === "Older";
+            return (
+              <li class:list={[older && "sm:col-start-2 sm:text-right"]}>
+                <a href={`/blog/${item.path}`} class="group block">
+                  <span
+                    class:list={[
+                      "flex items-center gap-1.5 text-sm text-ink-soft",
+                      older && "sm:justify-end",
+                    ]}
+                  >
+                    {!older && (
+                      <Icon
+                        name="tabler:arrow-left"
+                        class="h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    )}
+                    {item.label} post
+                    {older && (
+                      <Icon
+                        name="tabler:arrow-right"
+                        class="h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </span>
+                  <span class="mt-2 block font-display text-2xl leading-snug text-balance transition-colors group-hover:text-violet-ink">
+                    {curlyQuotes(item.title)}
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    )
+  }
 </article>

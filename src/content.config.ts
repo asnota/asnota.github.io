@@ -6,6 +6,8 @@ const compositions = defineCollection({
   loader: file("src/data/compositions/compositions.json"),
   schema: z.object({
     principalTitle: z.string(),
+    // Short category name for the homepage.
+    shortTitle: z.string().optional(),
     secondary: z.array(
       z.object({
         secondaryTitle: z.string().optional(),
@@ -13,6 +15,9 @@ const compositions = defineCollection({
           z.object({
             path: z.string().optional(),
             compositionTitle: z.string(),
+            // Short name and flag for the homepage highlights.
+            shortTitle: z.string().optional(),
+            highlight: z.boolean().optional(),
             compositionSubTitle: z.string().optional(),
             duration: z.string().optional(),
             compositionDescription: z.array(z.string()).optional(),
@@ -32,6 +37,7 @@ const achievements = defineCollection({
       z.object({
         description: z.string(),
         imgPath: z.string(),
+        imgAlt: z.string().optional(),
       }),
     ),
   }),

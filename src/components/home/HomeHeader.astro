@@ -1,0 +1,146 @@
+---
+import { Icon } from "astro-icon/components";
+
+const menuItems = [
+  { name: "News", href: "/blog" },
+  { name: "Compositions", href: "/compositions" },
+  { name: "Achievements", href: "/achievements" },
+  { name: "Press", href: "/press" },
+];
+---
+
+<header
+  class="sticky top-0 z-50 font-text border-b border-rule bg-paper/95 backdrop-blur-sm"
+>
+  <div
+    class="mx-auto flex h-16 max-w-[1240px] items-center justify-between px-6 md:h-20 md:px-12"
+  >
+    <a href="/" class="font-display text-2xl text-ink"
+      >Anna Shvets</a
+    >
+
+    <nav aria-label="Main" class="hidden items-center gap-8 md:flex">
+      {
+        menuItems.map((item) => (
+          <a
+            href={item.href}
+            class="text-[0.95rem] text-ink transition-colors hover:text-violet-ink"
+          >
+            {item.name}
+          </a>
+        ))
+      }
+      <a
+        href="#contact"
+        class="rounded-full bg-violet px-5 py-2.5 text-[0.95rem] font-medium text-white transition-colors hover:bg-violet-press"
+        >Contact</a
+      >
+      <button
+            type="button"
+            class="theme-toggle inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:text-violet-ink"
+            aria-label="Dark mode"
+            aria-pressed="false"
+          >
+            <Icon name="tabler:moon" class="h-5 w-5 dark:hidden" aria-hidden="true" />
+            <Icon name="tabler:sun" class="hidden h-5 w-5 dark:block" aria-hidden="true" />
+          </button>
+    </nav>
+
+    <div class="flex items-center gap-2 md:hidden">
+      <button
+            type="button"
+            class="theme-toggle inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:text-violet-ink"
+            aria-label="Dark mode"
+            aria-pressed="false"
+          >
+            <Icon name="tabler:moon" class="h-5 w-5 dark:hidden" aria-hidden="true" />
+            <Icon name="tabler:sun" class="hidden h-5 w-5 dark:block" aria-hidden="true" />
+          </button>
+      <button
+        id="home-menu-toggle"
+        type="button"
+        class="rounded-full border border-ink/30 px-4 py-2 text-sm text-ink"
+        aria-expanded="false"
+        aria-controls="home-menu"
+      >
+        Menu
+      </button>
+    </div>
+  </div>
+
+  <nav
+    id="home-menu"
+    aria-label="Main"
+    class="hidden border-t border-rule bg-paper px-6 pt-4 pb-8 md:hidden"
+  >
+    <ul class="flex flex-col">
+      {
+        menuItems.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="block border-b border-rule py-4 font-display text-2xl text-ink"
+            >
+              {item.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a
+      href="#contact"
+      class="mt-6 block rounded-full bg-violet px-5 py-3 text-center font-medium text-white"
+      >Contact</a
+    >
+  </nav>
+</header>
+
+<script>
+  const themeToggles = document.querySelectorAll(".theme-toggle");
+  const syncToggles = () => {
+    const isDark = document.documentElement.classList.contains("dark");
+    themeToggles.forEach((btn) => btn.setAttribute("aria-pressed", String(isDark)));
+    (window as Window & { syncThemeColor?: () => void }).syncThemeColor?.();
+  };
+  syncToggles();
+  themeToggles.forEach((btn) =>
+    btn.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.toggle("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      syncToggles();
+    }),
+  );
+  // Follow the system setting until the visitor picks a mode.
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", (event) => {
+      if (localStorage.getItem("theme")) return;
+      document.documentElement.classList.toggle("dark", event.matches);
+      syncToggles();
+    });
+
+  const toggle = document.getElementById("home-menu-toggle");
+  const menu = document.getElementById("home-menu");
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.textContent = open ? "Close" : "Menu";
+      menu.classList.toggle("hidden", !open);
+    };
+    toggle.addEventListener("click", () =>
+      setOpen(toggle.getAttribute("aria-expanded") !== "true"),
+    );
+    menu
+      .querySelectorAll("a")
+      .forEach((link) => link.addEventListener("click", () => setOpen(false)));
+    document.addEventListener("keydown", (event) => {
+      if (
+        event.key === "Escape" &&
+        toggle.getAttribute("aria-expanded") === "true"
+      ) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>

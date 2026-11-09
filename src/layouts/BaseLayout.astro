@@ -1,11 +1,10 @@
 ---
-// TODO See how font weight works. How many different weight I need to import
-import "@fontsource/poppins";
-import "@fontsource-variable/libre-baskerville";
-import "@fontsource/ibm-plex-mono";
-import Header from "../components/Header.astro";
+import "@fontsource-variable/playfair-display";
+import "@fontsource-variable/playfair-display/wght-italic.css";
+import "@fontsource-variable/hanken-grotesk";
 import ApplyColorMode from "../components/ApplyColorMode.astro";
-import Footer from "../components/Footer.astro";
+import HomeHeader from "../components/home/HomeHeader.astro";
+import HomeFooter from "../components/home/HomeFooter.astro";
 import { SEO } from "astro-seo";
 import type { Metadata } from "../types/metadata";
 
@@ -18,6 +17,7 @@ const { metadata } = Astro.props;
 
 <html lang="en">
   <head>
+    <meta name="theme-color" content="#f5f4ef" />
     <ApplyColorMode />
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -27,59 +27,39 @@ const { metadata } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <SEO title={metadata?.title} description={metadata?.description} />
   </head>
-  <body class="m-auto max-w-2xl">
-    <Header />
-    <div id="header-sentinel" class="h-5"></div>
+  <body class="home bg-paper font-text text-ink antialiased">
+    <a
+      href="#main-content"
+      class="sr-only rounded-full bg-ink px-4 py-2 text-paper focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60]"
+      >Skip to content</a
+    >
+    <HomeHeader />
     <main id="main-content">
       <slot />
     </main>
-    <Footer />
-
-    <script>
-      const header = document.getElementsByTagName("header")[0];
-      const sentinel = document.getElementById("header-sentinel");
-
-      if (header && sentinel) {
-        const headerHeight = header.offsetHeight;
-
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            // When content intersects with the header area, add shadow
-            if (entry.isIntersecting) {
-              header.classList.remove("shadow-b");
-            } else {
-              header.classList.add("shadow-b");
-            }
-          },
-          {
-            // Observe at the header position from the top
-            rootMargin: `-${headerHeight}px 0px 0px 0px`,
-            threshold: 0,
-          },
-        );
-
-        observer.observe(sentinel);
-      }
-    </script>
+    <HomeFooter />
   </body>
 </html>
 
-<style>
-  body {
-    background:
-      linear-gradient(to right, transparent, var(--background), transparent),
-      var(--bg-noise) repeat,
-      var(--background);
-    background-attachment: fixed;
+<style is:global>
+  .home ::selection {
+    background: var(--color-selection);
+    color: var(--color-ink);
   }
-
-  @media (min-width: 1200px) {
-    body {
-      background:
-        radial-gradient(circle, var(--background) 50%, transparent),
-        var(--bg-noise) repeat,
-        var(--background);
-      background-attachment: fixed;
-    }
+  .home :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .home .bg-night :focus-visible {
+    outline-color: var(--color-night-link);
+  }
+  .home a.text-link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+  }
+  .home a.text-link:hover {
+    text-decoration-thickness: 2px;
   }
 </style>

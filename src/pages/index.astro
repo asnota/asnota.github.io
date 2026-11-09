@@ -1,27 +1,56 @@
 ---
 import "../styles/global.css";
-import Separator from "../components/Separator.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import type { MarkdownInstance } from "astro";
 import type { FrontmatterIntro } from "../posts/frontmatter-post";
+import { Image, getImage } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import { YouTube } from "astro-embed";
 import BlogCard from "../components/blog/BlogCard.astro";
-import SpotifyLink from "../components/links/SpotifyLink.astro";
-import AppleMusicLink from "../components/links/AppleMusicLink.astro";
-import DeezerLink from "../components/links/DeezerLink.astro";
-import YouTubeLink from "../components/links/YouTubeLink.astro";
 import { getCollection } from "astro:content";
-import CompositionCard from "../components/CompositionCard.astro";
+import { OMEGA_ALBUM, STREAM_PROFILES } from "../consts";
+import omegaCover from "../images/omega_cover.jpg";
+import redemptionCover from "../images/redemption_cover.jpg";
 
-const introFiles = Object.values(
-  import.meta.glob<MarkdownInstance<FrontmatterIntro>>(
-    "../posts/*-intro*.{md,mdx}",
-    { eager: true },
-  ),
-)
-  .slice(-3)
-  .reverse();
+const redemptionPoster = await getImage({ src: redemptionCover, width: 1200, format: "webp" });
 
-const compositions = await getCollection("compositions");
+const introModules = import.meta.glob<MarkdownInstance<FrontmatterIntro>>(
+  "../posts/*-intro*.{md,mdx}",
+  { eager: true },
+);
+
+const latestNews = Object.values(introModules)
+  .sort(
+    (a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime(),
+  )
+  .slice(0, 3);
+
+const compositions = (await getCollection("compositions")).map(({ data }) => ({
+  title: data.shortTitle ?? data.principalTitle,
+  highlights: data.secondary
+    .flatMap((group) => group.compositions)
+    .filter((composition) => composition.highlight)
+    .map((composition) => composition.shortTitle ?? composition.compositionTitle),
+}));
+
+const credentials = [
+  {
+    label: "Education",
+    text: "PhD in computational musicology, Maria Curie-Skłodowska University, Lublin. Master in composition, Tchaikovsky National Academy of Music, Kyiv. Organist diploma, Przemyśl.",
+  },
+  {
+    label: "Awards",
+    text: "VRJAM 2023 prize, Culture et Arts Numériques (Toulouse). Winner of the international competition “Vivat musica!”. Finalist, CIMFA (Annecy).",
+  },
+  {
+    label: "Performed",
+    text: "Soeurs Jumelles festival (2023, 2024), Pierre Lamy hall in Annecy, Montecassiano, Vilnius, Lublin and Kyiv.",
+  },
+  {
+    label: "Research",
+    text: "31 peer-reviewed publications and 30 international conferences, from Washington and Boston to Paris and Copenhagen.",
+  },
+];
 
 const metadata = {
   title: "Anna Shvets – Classical Composer & Pianist | Official Website",
@@ -31,55 +60,205 @@ const metadata = {
 ---
 
 <BaseLayout metadata={metadata}>
-  <main>
-    <p class="mx-auto w-fit text-[2em] font-bold">Composer & Pianist</p>
-    <section class="flex items-center justify-center gap-5 pt-10">
-      <SpotifyLink />
-      <YouTubeLink />
-      <AppleMusicLink />
-      <DeezerLink />
-    </section>
+  <!-- Hero -->
+  <section class="border-b border-rule">
+    <div
+      class="mx-auto grid max-w-[1240px] gap-12 px-6 pt-12 pb-20 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-16 md:px-12 md:pt-20 md:pb-28"
+    >
+      <div>
+        <h1 class="font-display text-[clamp(3.25rem,7.5vw,6rem)] leading-[0.95] font-normal tracking-[-0.02em]">
+          Anna <em class="italic">Shvets</em>
+        </h1>
+        <p class="mt-5 text-sm font-semibold tracking-[0.18em] text-violet-ink uppercase">
+          Composer &amp; Pianist
+        </p>
+        <p class="mt-6 max-w-[34ch] text-lg leading-relaxed text-ink-soft">
+          Music for orchestra, choir, organ and chamber ensembles, and immersive
+          VR works where AI turns sound into space.
+        </p>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a
+            href={STREAM_PROFILES.spotify.href}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 font-medium whitespace-nowrap text-paper transition-colors hover:bg-violet-ink"
+          >
+            <Icon name="tabler:player-play-filled" class="h-4 w-4" aria-hidden="true" />
+            Listen on Spotify
+          </a>
+          <a
+            href="/compositions"
+            class="inline-flex items-center justify-center rounded-full border border-ink/30 px-6 py-3 font-medium whitespace-nowrap text-ink transition-colors hover:border-ink"
+          >
+            Explore compositions
+          </a>
+        </div>
+        <p class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-ink-soft">
+          <span>Also on</span>
+          <a href={STREAM_PROFILES.appleMusic.href} target="_blank" rel="noopener" class="text-link text-ink">{STREAM_PROFILES.appleMusic.name}</a>
+          <a href={STREAM_PROFILES.youtube.href} target="_blank" rel="noopener" class="text-link text-ink">{STREAM_PROFILES.youtube.name}</a>
+          <a href={STREAM_PROFILES.deezer.href} target="_blank" rel="noopener" class="text-link text-ink">{STREAM_PROFILES.deezer.name}</a>
+        </p>
+      </div>
 
-    <Separator classList={["w-1/2 my-10 mx-auto"]} />
+      <figure>
+        <div class="hero-video ml-auto max-w-[520px] overflow-hidden rounded-[3px] bg-night shadow-[0_24px_48px_-24px_rgb(23_20_31/0.45)]">
+          <YouTube
+            id="MNY_ukRzFsg"
+            title="Redemption – Anna Shvets"
+            playlabel="Play Redemption"
+            poster={redemptionPoster.src}
+          />
+        </div>
+        <figcaption class="mt-4 ml-auto flex max-w-[520px] flex-wrap items-baseline justify-between gap-2 text-sm text-ink-soft">
+          <span>
+            <em class="font-display font-normal text-base text-ink italic">Redemption</em>,
+            new release, on a melody by Valentyna Shvets
+          </span>
+          <a href="/blog/redemption-release" class="text-link text-violet-ink">Read the story</a>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
 
-    <section>
-      <h2 class="mx-auto mb-10 w-fit">Latest news</h2>
-      {
-        introFiles.map((intro, index, array) => {
-          const isLast = index === array.length - 1;
-          return (
-            // jsx fragment is needed because of a bug inside prettier-asto : https://github.com/withastro/prettier-plugin-astro/issues/429
-
-            <>
-              <BlogCard intro={intro} />
-              {!isLast && <Separator classList={["my-10 mx-auto"]} />}
-            </>
-          );
-        })
-      }
-      <a
-        href="/blog"
-        class="mx-auto mt-10 block w-fit text-sm tracking-widest uppercase underline decoration-primary underline-offset-8"
-      >
-        See all news
-      </a>
-    </section>
-
-    <Separator classList={["my-10 mx-auto"]} />
-
-    <section>
-      <h2 class="mx-auto mb-6 w-fit">Compositions</h2>
-      <ul>
+  <!-- Latest news -->
+  <section aria-labelledby="news-heading">
+    <div class="mx-auto max-w-[1240px] px-6 py-20 md:px-12 md:py-28">
+      <div class="flex items-baseline justify-between gap-6">
+        <h2 id="news-heading" class="font-display font-normal text-4xl md:text-5xl">Latest news</h2>
+        <a href="/blog" class="text-link shrink-0 text-sm text-violet-ink">All news</a>
+      </div>
+      <div class="mt-10 grid gap-10 md:mt-14 md:grid-cols-3 md:gap-8">
         {
-          compositions.map((composition) => {
-            return (
-              <li class="flex items-center justify-between border-b border-primary/10 py-4 last:border-b-0 last:pb-0">
-                <CompositionCard composition={composition} />
-              </li>
-            );
-          })
+          latestNews.map((intro) => (
+            <BlogCard intro={intro}>
+              <intro.Content />
+            </BlogCard>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured: Omega -->
+  <section class="bg-night text-night-ink" aria-labelledby="omega-heading">
+    <div
+      class="mx-auto grid max-w-[1240px] gap-y-8 px-6 py-20 md:grid-cols-2 md:gap-x-16 md:gap-y-6 md:px-12 md:py-28"
+    >
+      <h2
+        id="omega-heading"
+        class="font-display font-normal text-5xl md:col-start-1 md:row-start-1 md:self-end md:text-7xl"
+      >
+        Omega
+      </h2>
+      <Image
+        src={omegaCover}
+        alt="Omega single by Anna Shvets, available on Spotify, Apple Music and YouTube"
+        widths={[480, 720, 1080]}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        class="w-full rounded-[3px] md:col-start-2 md:row-span-2 md:row-start-1 md:self-center"
+      />
+      <div class="md:col-start-1 md:row-start-2">
+        <p class="max-w-[38ch] text-lg leading-relaxed text-night-soft">
+          The music of the award-winning Omega VR project, a volumetric
+          composition shown at the Soeurs Jumelles festival in Rochefort, now on
+          streaming platforms.
+        </p>
+        <div class="mt-9 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
+          {
+            Object.values(OMEGA_ALBUM).map((link, index) => (
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener"
+                class:list={[
+                  "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-medium whitespace-nowrap transition-colors",
+                  index === 0
+                    ? "col-span-2 bg-night-ink text-night hover:bg-lavender dark:hover:bg-night-link"
+                    : "border border-white/35 text-night-ink hover:border-white",
+                ]}
+              >
+                {index === 0 && (
+                  <Icon name="tabler:player-play-filled" class="h-4 w-4" aria-hidden="true" />
+                )}
+                {link.name}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compositions -->
+  <section aria-labelledby="compositions-heading">
+    <div class="mx-auto max-w-[1240px] px-6 py-20 md:px-12 md:py-28">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h2 id="compositions-heading" class="font-display font-normal text-4xl md:text-5xl">Compositions</h2>
+          <p class="mt-4 max-w-[52ch] text-lg text-ink-soft">
+            From symphonies to sacred choral music, organ works and scores for
+            film and VR.
+          </p>
+        </div>
+        <a href="/compositions" class="text-link hidden shrink-0 text-sm text-violet-ink md:inline">Full catalogue</a>
+      </div>
+      <ul class="mt-12 grid md:grid-cols-3 md:gap-x-10">
+        {
+          compositions.map((category) => (
+            <li class="border-b border-rule first:border-t md:nth-[-n+3]:border-t">
+              <a href="/compositions" class="group block py-6">
+                <h3 class="font-display font-normal text-2xl text-balance transition-colors group-hover:text-violet-ink">{category.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+                  {category.highlights.join(" · ")}
+                </p>
+              </a>
+            </li>
+          ))
         }
       </ul>
-    </section>
-  </main>
+      <a
+        href="/compositions"
+        class="mt-10 block rounded-full border border-ink/30 px-6 py-3 text-center font-medium transition-colors hover:border-ink md:hidden"
+        >Full catalogue</a
+      >
+    </div>
+  </section>
+
+  <!-- Credentials -->
+  <section class="bg-lavender" aria-labelledby="credentials-heading">
+    <div class="mx-auto max-w-[1240px] px-6 py-20 md:px-12 md:py-28">
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <h2 id="credentials-heading" class="max-w-[20ch] font-display font-normal text-4xl leading-[1.1] text-balance md:text-5xl">
+          Between the concert hall and the lab
+        </h2>
+        <p class="flex shrink-0 gap-6 text-sm whitespace-nowrap">
+          <a href="/achievements" class="text-link text-violet-ink">All achievements</a>
+          <a href="/press" class="text-link text-violet-ink">Press</a>
+        </p>
+      </div>
+      <dl class="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        {
+          credentials.map((item) => (
+            <div>
+              <dt class="text-xs font-semibold tracking-[0.14em] text-violet-ink uppercase">{item.label}</dt>
+              <dd class="mt-3 leading-relaxed">{item.text}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .hero-video :global(lite-youtube)::before {
+    display: none;
+  }
+  .hero-video :global(lite-youtube)::after {
+    padding-bottom: 100%;
+  }
+  .hero-video :global(lite-youtube) {
+    background-size: cover;
+  }
+</style>

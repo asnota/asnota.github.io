@@ -6,8 +6,8 @@ import type {
   FrontmatterIntro,
   FrontmatterPost,
 } from "../../posts/frontmatter-post";
-import BlogPost from "../../components/blog/BlogPost.astro";
-import Separator from "../../components/Separator.astro";
+import { formatIsoDate } from "../../utils/date-utils";
+import { curlyQuotes } from "../../utils/text-utils";
 
 const introFiles = Object.values(
   import.meta.glob<MarkdownInstance<FrontmatterIntro>>(
@@ -24,13 +24,17 @@ const posts = Object.values(
 );
 
 function getPostFromIntro(introFile: MarkdownInstance<FrontmatterIntro>) {
-  const { frontmatter } = introFile;
-
-  if (frontmatter.post) {
-    return posts.find((post) => post.file.includes(frontmatter.post));
-  }
-  return undefined;
+  const { post } = introFile.frontmatter;
+  return post ? posts.find((file) => file.file.includes(post)) : undefined;
 }
+
+// First post of each year, newest first, for the year links.
+const yearOf = (intro: MarkdownInstance<FrontmatterIntro>) =>
+  String(intro.frontmatter.date).slice(0, 4);
+const yearStarts = new Map<string, number>();
+introFiles.forEach((intro, index) => {
+  if (!yearStarts.has(yearOf(intro))) yearStarts.set(yearOf(intro), index);
+});
 
 const metadata = {
   title: "Latest News from Anna Shvets – Classical Composer & Pianist",
@@ -40,18 +44,76 @@ const metadata = {
 ---
 
 <BaseLayout metadata={metadata}>
-  <main class="prose max-w-none prose-custom dark:prose-invert">
+  <header class="border-b border-rule">
+    <div
+      class="mx-auto max-w-[1240px] px-6 pt-12 pb-16 md:px-12 md:pt-20 md:pb-20"
+    >
+      <h1
+        class="font-display text-[clamp(3rem,6vw,4.5rem)] leading-none font-normal tracking-[-0.02em]"
+      >
+        News
+      </h1>
+      <nav aria-label="Years" class="mt-10">
+        <ul class="flex flex-wrap gap-2">
+          {
+            [...yearStarts.keys()].map((year) => (
+              <li>
+                <a
+                  href={`#year-${year}`}
+                  class="inline-flex rounded-full border border-ink/30 px-4 py-2 text-sm text-ink tabular-nums transition-colors hover:border-ink"
+                >
+                  {year}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="mx-auto max-w-[1240px] px-6 pb-20 md:px-12 md:pb-28">
     {
-      introFiles.map((intro, index, array) => {
-        const isLast = index === array.length - 1;
+      introFiles.map((intro, index) => {
+        const { title, date, path } = intro.frontmatter;
+        const headingId = `post-${index}`;
         const post = getPostFromIntro(intro);
         return (
-          <>
-            <BlogPost post={post} intro={intro} />
-            {!isLast && <Separator classList={["my-10 mx-auto"]} />}
-          </>
+          <article
+            id={
+              yearStarts.get(yearOf(intro)) === index
+                ? `year-${yearOf(intro)}`
+                : undefined
+            }
+            aria-labelledby={headingId}
+            class:list={[
+              "grid scroll-mt-16 gap-6 pt-14 md:scroll-mt-20 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-16 md:pt-20",
+              index > 0 && "mt-14 border-t border-rule md:mt-20",
+            ]}
+          >
+            <div class="md:sticky md:top-28 md:self-start">
+              <p class="text-sm text-ink-soft">
+                <time datetime={date}>{formatIsoDate(date)}</time>
+              </p>
+              <h2
+                id={headingId}
+                class="mt-3 font-display text-3xl leading-[1.15] font-normal text-balance lg:text-4xl"
+              >
+                <a
+                  href={`/blog/${path}`}
+                  class="transition-colors hover:text-violet-ink"
+                >
+                  {curlyQuotes(title)}
+                </a>
+              </h2>
+            </div>
+            <div class="prose-custom prose prose-lg min-w-0">
+              <intro.Content />
+              {post && <post.Content />}
+            </div>
+          </article>
         );
       })
     }
-  </main>
+  </div>
 </BaseLayout>

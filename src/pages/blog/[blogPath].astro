@@ -24,7 +24,11 @@ export async function getStaticPaths() {
 
   const paths = [];
 
-  for (const intro of introFiles) {
+  // Files sort by number, oldest first.
+  const link = (file?: MarkdownInstance<FrontmatterIntro>) =>
+    file && { title: file.frontmatter.title, path: file.frontmatter.path };
+
+  for (const [index, intro] of introFiles.entries()) {
     paths.push({
       params: {
         blogPath: encodeURIComponent(intro.frontmatter.path),
@@ -32,6 +36,8 @@ export async function getStaticPaths() {
       props: {
         intro,
         post: posts.find((post) => post.file.includes(intro.frontmatter.post)),
+        older: link(introFiles[index - 1]),
+        newer: link(introFiles[index + 1]),
       },
     });
   }
@@ -39,7 +45,7 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { intro, post } = Astro.props;
+const { intro, post, older, newer } = Astro.props;
 ---
 
 <BaseLayout
@@ -48,7 +54,5 @@ const { intro, post } = Astro.props;
     description: intro.frontmatter.description,
   }}
 >
-  <main class="prose max-w-none prose-custom dark:prose-invert">
-    <BlogPost post={post} intro={intro} />
-  </main>
+  <BlogPost post={post} intro={intro} older={older} newer={newer} />
 </BaseLayout>
